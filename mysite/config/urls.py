@@ -18,5 +18,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('pybo/', include('pybo.urls')),  # 추가
+    path('blog/',include('blog.urls')),
+    path('', include('single_page.urls')),
+    path('board/', include('board.urls')),
 ]
