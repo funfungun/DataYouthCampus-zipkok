@@ -1,14 +1,26 @@
 from django.shortcuts import render
 
-def landing(request):
+def index(request):
     return render(
         request,
-        'single_page/landing.html'
+        'single_page/index.html'
     )
 
 
-def about_me(request):
+def one(request):
     return render(
         request,
-        'single_page/about_me.html'
+        'single_page/one.html'
+    )
+
+def two(request):
+    return render(
+        request,
+        'single_page/two.html'
+    )
+
+def three(request):
+    return render(
+        request,
+        'single_page/three.html'
     )
