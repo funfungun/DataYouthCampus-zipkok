@@ -5,6 +5,6 @@ urlpatterns = [
     path('one/', views.one),
     path('one/two/', views.two),
     path('one/two/three/', views.three),
-    path('pp/', views.pp),
+    path('pp/', views.pp, name = 'pp'),
     path('', views.index),
 ]
