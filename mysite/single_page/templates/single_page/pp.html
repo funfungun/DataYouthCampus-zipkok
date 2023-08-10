@@ -1,15 +1,40 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <title>시..시시시!</title>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>문서 제목</title>
+    <canvas class="canvas" width="300" height="100"></canvas>
+    <script>
+        function executePath1() {
+            window.location.href = "one/";
+        }
+    </script>
 </head>
 <body>
-    <!-- 여기에 웹 페이지의 내용을 추가합니다. -->
-    <h1>
-        {{DataEngCsv.chatolic}}
-    </h1>
-    <p>본문 내용</p>
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Zipcode</th>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                    <th>Bike</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in latest_list %}
+                    <tr>
+                        <td>{{ data.zipcode }}</td>
+                        <td>{{ data.lat }}</td>
+                        <td>{{ data.lon }}</td>
+                        <td>{{ data.bike }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>

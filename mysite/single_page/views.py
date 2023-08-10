@@ -1,22 +1,20 @@
 from django.shortcuts import render
-from rest_framework.response import Response
+from django.http import HttpResponse
+from django.template import loader
 from rest_framework.decorators import api_view
 from .models import DataEngCsv
 from .serializers import TestDataSerializer
 
-@api_view(['GET'])
-
 def pp(request):
-    datas = DataEngCsv.objects.filter(daiso = 1)
-    return render(
-        request,
-        'single_page/pp.html'
-    )
+    latest_list = DataEngCsv.objects.all()
+    template = loader.get_template('single_page/pp.html')
+    context = {'latest_list': latest_list}
+    return HttpResponse(template.render(context, request))
 
 def getTestDatas(request):
     datas = DataEngCsv.objects.all()
     serializer = TestDataSerializer(datas, many=True)
-    return Response(serializer.data)
+    return HttpResponse(serializer.data)
 
 def index(request):
     return render(
