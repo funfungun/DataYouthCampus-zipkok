@@ -5,6 +5,14 @@ from .models import DataEngCsv
 from .serializers import TestDataSerializer
 
 @api_view(['GET'])
+
+def pp(request):
+    datas = DataEngCsv.objects.filter(daiso = 1)
+    return render(
+        request,
+        'single_page/pp.html'
+    )
+
 def getTestDatas(request):
     datas = DataEngCsv.objects.all()
     serializer = TestDataSerializer(datas, many=True)
