@@ -5,7 +5,7 @@ from .models import Post
 
 class PostList(ListView):
     model = Post
-    template_name = 'blog/post_list.html'
+    template_name = 'title/post_list.html'
     ordering = '-pk'
 
 
@@ -14,7 +14,7 @@ class PostList(ListView):
 #
 #     return render(
 #         request,
-#         'blog/post_list.html',
+#         'title/post_list.html',
 #         {
 #             'posts':posts,
 #         }
@@ -25,7 +25,7 @@ def single_post_page(request, pk):
 
     return render(
         request,
-        'blog/single_post_page.html',
+        'title/single_post_page.html',
         {
             'post': post
         }
