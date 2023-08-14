@@ -1,7 +1,7 @@
 body {
     text-align: center;
     background-size: 1500px 1500px;
-    background-color: rgb(255, 52, 120);
+    background-color: rgb(46, 68, 66);
     margin: 0 auto;
 }
 
@@ -13,7 +13,7 @@ body {
 }
 
 .container img {
-    margin: 0px;
+    margin: 0;
 }
 
 img {
@@ -52,10 +52,9 @@ h3 {
 
 h3 img {
     display: inline-block;
-    margin-right: 0px;
-    margin-left: 0px;
+    margin-right: 0;
+    margin-left: 0;
 }
-
 
 button {
     display: inline-block;
@@ -77,5 +76,24 @@ button {
 
 button:hover {
     background-color: lightgrey;
-    transform: scale(1.10);
+    transform: scale(1.1);
+}
+
+/* Styling for the form */
+.form-check {
+    margin: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center the checkboxes and labels horizontally */
+    color: white;
+    font-size: 24px;
+}
+
+.form-check input[type="checkbox"] {
+    margin-right: 10px;
+    /* Add any additional checkbox-specific styling here */
+}
+
+.form-check label {
+    cursor: pointer;
 }

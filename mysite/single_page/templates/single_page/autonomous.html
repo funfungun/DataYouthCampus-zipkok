@@ -1,0 +1,44 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="'UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <canvas class="canvas" width="300" height="100"></canvas>
+    <title>데이터 청년 캠퍼스</title>
+    <script>
+    </script>
+</head>
+
+<body>
+    <div>
+        <h1>
+            자치구 선택하기
+        </h1>
+    </div>
+
+    <form id="checkbox-formfrom" method="post" action="{% url 'autonomous' %}">
+        {% csrf_token %}
+        <div class="form-check">
+            <input type="checkbox" value="마포구" id="Mapo" name="DataEngCsv">
+            <label for="Mapo">마포구</label>
+        </div>
+
+        <div class="form-check">
+            <input type="checkbox" value="서대문구" id="Seodaemoon" name="DataEngCsv">
+            <label for="Seodaemoon">서대문구</label>
+        </div>
+
+        <div class="form-check">
+            <input type="checkbox" value="종로구" id="Jonglo" name="DataEngCsv">
+            <label for="Jonglo">종로구</label>
+        </div>
+
+        <button type="submit">다음</button>
+    </form>
+</body>
+
+</html>

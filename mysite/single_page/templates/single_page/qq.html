@@ -1,0 +1,19 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>데이터 청년 캠퍼스</title>
+    <meta charset="UTF-8">
+    <canvas class="canvas" width="300" height="100"></canvas>
+</head>
+<body>
+    <h1>걸러진 우편번호</h1>
+    <ul>
+        {% for item in filtered_data %}
+        <li>{{ item.zipcode }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
