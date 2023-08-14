@@ -1,0 +1,48 @@
+<html>
+<head>
+    <title>제발돼라</title>
+<body>
+<!-- Complete and Check Form -->
+<form action="{% url 'check_and_filter' %}" method = "post">
+    {% csrf_token %}
+    <div class="form-check">
+        <input type="checkbox" value="마포구" id="Mapo" name="DataEngCsv">
+        <label for="Mapo">마포구</label>
+    </div>
+
+    <div class="form-check">
+        <input type="checkbox" value="서대문구" id="Seodaemoon" name="DataEngCsv">
+        <label for="Seodaemoon">서대문구</label>
+    </div>
+
+    <div class="form-check">
+        <input type="checkbox" value="종로구" id="Jonglo" name="DataEngCsv">
+        <label for="Jonglo">종로구</label>
+    </div>
+    <!-- <button type="submit">검색</button> -->
+    <br>
+    <h2>월세보증금(단위:만(원))</h2>
+<form method = 'post'>
+    <input type="text" name="title">
+    <br><h2>월세(단위:만(원))</h2>
+    <input type="text" name="content">
+    <input type="submit" value="작성">
+</form>
+<h2>조건 충족하는 놈들</h2>
+    <table>
+        <tr>
+            <th>우편번호</th>
+            <th>전세가</th>
+            <th>구코드</th>
+        </tr>
+        {% for item in filtered_one %}
+        <tr>
+            <td>{{item.zipcode}}</td>
+            <td>{{item.avg_cost}}</td>
+            <td>{{item.place_code}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</head>
+</html>
