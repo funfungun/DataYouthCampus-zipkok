@@ -87,8 +87,8 @@ def category(request):
         filter_2 = {item.zipcode:{'lat':item.lat,'lon':item.lon} for item in filtered_data}
         # 필터로 넘겨주기 위해 json파일 형태로 직렬화
         filter_2_data = [{'zipcode': key, 'lat': value['lat'], 'lon': value['lon']} for key, value in filter_2.items()]
-        filter_2_serialized = json.dumps(filter_2_data)
-        request.session['filter_2'] = filter_2_serialized
+        selected_items_serialized = json.dumps(selected_items)
+        request.session['selected_items'] = selected_items_serialized
         print(filter_2.keys())
         num=len(filter_2)
         return render(request, 'single_page/input.html', {'num':num})
@@ -100,10 +100,18 @@ def category(request):
 def final_page(request):
     if request.method == 'POST':
 
-        filter_2 = request.session.get('filter_2', [])
-        filter_2_data = json.loads(filter_2_serialized)
-        print(filter_2)
+        # session으로 가져오기
+        filter_1_serialized = request.session.get('filter_1', [])
+        filter_1_data = json.loads(filter_1_serialized)
+        selected_items_serialized = request.session.get('selected_items', [])
+        selected_items = json.loads(selected_items_serialized)
 
+        # 가져온 정보로 다시 검색
+        filtered_data = DataEngCsv.objects.filter(zipcode__in=filter_1_data,
+                                                  **{f"{item}__gte": 1 for item in selected_items})
+        filter_2 = {item.zipcode: {'lat': item.lat, 'lon': item.lon} for item in filtered_data}
+
+        # 추가정보 받아오기
         destination = str(request.POST.get('destination'))
         limit_time = int(request.POST.get('limit_time'))
         transfer_count = int(request.POST.get('transfer_count'))
