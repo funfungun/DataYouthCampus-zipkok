@@ -1,0 +1,14 @@
+{% load templatetags %}
+<link href="{% templatetags 'custom_filter.py' %}">
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>데이터 청년 캠퍼스</title>
+    <meta charset="UTF-8">
+    <canvas class="canvas" width="300" height="100"></canvas>
+</head>
+<body>
+    <h1>{% for key in result_2|keys %}{{ key }}{% endfor %}</h1>
+</body>
+</html>

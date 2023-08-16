@@ -13,5 +13,16 @@
     <h3>
         남은 우편번호 : {{num}}개
     </h3>
+    <table>
+        <tr>
+            <th>우편번호</th>
+        </tr>
+        {% for item in information %}
+        <tr>
+            <th>{{item.zipcode}}</th>
+        </tr>
+        {% endfor %}
+
+    </table>
 </body>
 </html>
