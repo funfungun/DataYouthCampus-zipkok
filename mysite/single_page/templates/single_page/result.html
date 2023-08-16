@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>데이터 청년 캠퍼스</title>
+    <meta charset="UTF-8">
+    <canvas class="canvas" width="300" height="100"></canvas>
+</head>
+    <script>
+        function goBack() {
+          window.history.back();
+        }
+    </script>
+<body>
+    <div>
+        {% for key, value in result_2.items %}
+        <ul>
+            <li><b>추천우편번호 : {{key}}</b></li>
+            <li>구 : {{value.city_gu}}</li>
+            <li>행정동 : {{value.admin_dong}}</li>
+            <li>법정동 : {{value.legal_dong}}</li>
+            <li>소요시간 : {{value.totalTime}}</li>
+            <li>map : {{value.map}}</li>
+        </ul>
+        {% endfor %}
+    </div>
+</body>
+</html>

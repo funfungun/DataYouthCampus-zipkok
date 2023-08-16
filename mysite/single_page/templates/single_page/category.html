@@ -26,6 +26,9 @@
     </style>
     <canvas class="canvas" width="300" height="100"></canvas>
     <script>
+        function goBack() {
+          window.history.back();
+        }
     </script>
 </head>
 
@@ -42,47 +45,70 @@
         <form id="checkbox-form" method="post" action="{% url 'category' %}">
             {% csrf_token %}
             <div class="checkbox-grid">
-                <label><input type="checkbox" name="selected_items" value="bus_stop"> 버스정류장</label>
-                <label><input type="checkbox" name="selected_items" value="art"> 미술관 & 전시관</label>
-                <label><input type="checkbox" name="selected_items" value="bike"> 자전거대여소</label>
-                <label><input type="checkbox" name="selected_items" value="gym"> 헬스클럽</label>
-                <label><input type="checkbox" name="selected_items" value="chatolic"> 성당</label>
-                <label><input type="checkbox" name="selected_items" value="hospital"> 병원</label>
-                <label><input type="checkbox" name="selected_items" value="perform_place"> 공연장</label>
-                <label><input type="checkbox" name="selected_items" value="park"> 공원</label>
-                <label><input type="checkbox" name="selected_items" value="theater"> 영화관</label>
-                <label><input type="checkbox" name="selected_items" value="subway"> 지하철역</label>
-                <label><input type="checkbox" name="selected_items" value="animal_hospital"> 동물병원</label>
-                <label><input type="checkbox" name="selected_items" value="beatuy_care"> 뷰티케어</label>
-                <label><input type="checkbox" name="selected_items" value="coin_karaoke"> 코인노래방</label>
-                <label><input type="checkbox" name="selected_items" value="liberary"> 도서관</label>
-                <label><input type="checkbox" name="selected_items" value="church"> 교회</label>
-                <label><input type="checkbox" name="selected_items" value="big_mart"> 대형마트</label>
-                <label><input type="checkbox" name="selected_items" value="gonggogng_gym"> 공공체육시설</label>
-                <label><input type="checkbox" name="selected_items" value="cafe"> 카페 & 디저트</label>
-                <label><input type="checkbox" name="selected_items" value="police_office"> 경찰서</label>
-                <label><input type="checkbox" name="selected_items" value="daiso"> 생활용품점</label>
-                <label><input type="checkbox" name="selected_items" value="bar"> 술집</label>
-                <label><input type="checkbox" name="selected_items" value="shopping_center"> 쇼핑센터</label>
-                <label><input type="checkbox" name="selected_items" value="super_market"> 슈퍼마켓</label>
-                <label><input type="checkbox" name="selected_items" value="pharmacy"> 약국</label>
-                <label><input type="checkbox" name="selected_items" value="banchan"> 반찬가게 & 밀키트</label>
-                <label><input type="checkbox" name="selected_items" value="convience_store"> 편의점</label>
-                <label><input type="checkbox" name="selected_items"value="bank"> 은행</label>
-                <label><input type="checkbox" name="selected_items" value="coin_wash_room"> 코인세탁방</label>
-                <label><input type="checkbox" name="selected_items" value="yoga"> 요가</label>
-                <label><input type="checkbox" name="selected_items"value="cross_fit"> 크로스핏</label>
-                <label><input type="checkbox" name="selected_items" value="atm"> ATM</label>
-                <label><input type="checkbox" name="selected_items" value="food_store"> 음식점</label>
-                <label><input type="checkbox" name="selected_items" value="post_office"> 우체국</label>
-                <label><input type="checkbox" name="selected_items" value="pc_room"> PC방</label>
-                <label><input type="checkbox" name="selected_items" value="piilates"> 필라테스</label>
-                <label><input type="checkbox" name="selected_items" value="citizen_center"> 주민센터</label>
-                <label><input type="checkbox" name="selected_items" value="temple"> 절</label>
-                <br>
-            </div>
+                <div align="center" style="border: 2px solid #48BAE4; height: 250px;">
+                    <h3>운동시설</h3>
+                        <label><input type="checkbox" name="selected_items" value="gym"> 헬스클럽</label>
+                        <label><input type="checkbox" name="selected_items" value="gonggogng_gym"> 공공체육시설</label>
+                        <label><input type="checkbox" name="selected_items" value="park"> 공원</label>
+                        <label><input type="checkbox" name="selected_items" value="piilates"> 필라테스</label>
+                        <label><input type="checkbox" name="selected_items" value="yoga"> 요가</label>
+                        <label><input type="checkbox" name="selected_items" value="cross_fit"> 크로스핏</label>
+                </div>
+                <div align="center" style="border: 2px solid #48BAE4; height: 250px;">
+                    <h3>문화시설</h3>
+                        <label><input type="checkbox" name="selected_items" value="art"> 미술관 & 전시관</label>
+                        <label><input type="checkbox" name="selected_items" value="perform_place"> 공연장</label>
+                        <label><input type="checkbox" name="selected_items" value="theater"> 영화관</label>
+                        <label><input type="checkbox" name="selected_items" value="liberary"> 도서관</label>
+                    </div>
+                <div align="center" style="border: 2px solid #48BAE4; height: 250px;">
+                    <h3>종교시설</h3>
+                        <label><input type="checkbox" name="selected_items" value="chatolic"> 성당</label>
+                        <label><input type="checkbox" name="selected_items" value="church"> 교회</label>
+                        <label><input type="checkbox" name="selected_items" value="temple"> 절</label>
+                </div>
+                    <div align="center" style="border: 2px solid #48BAE4; height: 250px;">
+                        <h3>공공시설</h3>
+                        <label><input type="checkbox" name="selected_items" value="police_office"> 경찰서</label>
+                        <label><input type="checkbox" name="selected_items"value="bank"> 은행</label>
+                        <label><input type="checkbox" name="selected_items" value="citizen_center"> 주민센터</label>
+                        <label><input type="checkbox" name="selected_items" value="post_office"> 우체국</label>
+                    </div>
+                <div align="center" style="border: 2px solid #48BAE4; height: 250px;">
+                    <h3>교통시설</h3>
+                        <label><input type="checkbox" name="selected_items" value="bus_stop"> 버스정류장</label>
+                        <label><input type="checkbox" name="selected_items" value="bike"> 자전거대여소</label>
+                        <label><input type="checkbox" name="selected_items" value="subway"> 지하철역</label>
+                </div>
+                <div align="center" style="border: 2px solid #48BAE4; height: 250px;">
+                    <h3>병원시설</h3>
+                        <label><input type="checkbox" name="selected_items" value="hospital"> 병원</label>
+                        <label><input type="checkbox" name="selected_items" value="pharmacy"> 약국</label>
+                        <label><input type="checkbox" name="selected_items" value="animal_hospital"> 동물병원</label>
+                </div>
+                <div align="center" style="border: 2px solid #48BAE4; height: 250px;">
+                    <h3>생활시설</h3>
+                        <label><input type="checkbox" name="selected_items" value="beatuy_care"> 뷰티케어</label>
+                        <label><input type="checkbox" name="selected_items" value="coin_karaoke"> 코인노래방</label>
+                        <label><input type="checkbox" name="selected_items" value="big_mart"> 대형마트</label>
+                        <label><input type="checkbox" name="selected_items" value="cafe"> 카페 & 디저트</label>
+                        <label><input type="checkbox" name="selected_items" value="daiso"> 생활용품점</label>
+                        <label><input type="checkbox" name="selected_items" value="bar"> 술집</label>
+                        <label><input type="checkbox" name="selected_items" value="shopping_center"> 쇼핑센터</label>
+                        <label><input type="checkbox" name="selected_items" value="super_market"> 슈퍼마켓</label>
+                        <label><input type="checkbox" name="selected_items" value="banchan"> 반찬가게 & 밀키트</label>
+                        <label><input type="checkbox" name="selected_items" value="convience_store"> 편의점</label>
+                        <label><input type="checkbox" name="selected_items" value="coin_wash_room"> 코인세탁방</label>
+                        <label><input type="checkbox" name="selected_items" value="atm"> ATM</label>
+                        <label><input type="checkbox" name="selected_items" value="food_store"> 음식점</label>
+                        <label><input type="checkbox" name="selected_items" value="pc_room"> PC방</label>
+                </div>
+
+                </div>
             <button type="submit">다음</button>
-        </form> 
-    
+        </form>
+            <button onclick="goBack()">뒤로가기</button>
+
+
 </body>
 </html>

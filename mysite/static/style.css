@@ -1,7 +1,7 @@
 body {
     text-align: center;
     background-size: 1500px 1500px;
-    background-color: rgb(46, 68, 66);
+    background-color: rgb(210, 231, 214);
     margin: 0 auto;
 }
 
@@ -41,19 +41,39 @@ h1 img {
 h2 {
     font-size: 35px;
     text-align: center;
-    color: white;
-}
+    color: black;}
 
 h3 {
     font-size: 25px;
     text-align: center;
-    color: white;
+    color: black;
 }
 
 h3 img {
     display: inline-block;
     margin-right: 0;
     margin-left: 0;
+}
+
+ul {
+  display: block;
+  list-style-type: none;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  padding-inline-start: 40px;
+}
+
+li {
+  list-style-type: none;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  padding-inline-start: 40px;
+  display: list-item;
+  text-align: -webkit-match-parent;
 }
 
 button {

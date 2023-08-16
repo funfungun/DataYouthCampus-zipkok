@@ -1,8 +1,19 @@
-<html>
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>제발돼라</title>
+    <meta charset="'UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <canvas class="canvas" width="300" height="100"></canvas>
+    <title>데이터 청년 캠퍼스</title>
+    <script>
+
+    </script>
+</head>
 <body>
-<!-- Complete and Check Form -->
+<h2>주거 희망하는 구 선택하기</h2>
 <form action="{% url 'check_and_filter' %}" method = "post">
     {% csrf_token %}
     <div class="form-check">
@@ -19,16 +30,19 @@
         <input type="checkbox" value="종로구" id="Jonglo" name="DataEngCsv">
         <label for="Jonglo">종로구</label>
     </div>
-    <!-- <button type="submit">검색</button> -->
     <br>
     <h2>월세보증금(단위:만(원))</h2>
 <form method = 'post'>
     <input type="text" name="title">
-    <br><h2>월세(단위:만(원))</h2>
+    <br>
+    <h2>월세(단위:만(원))</h2>
     <input type="text" name="content">
-    <input type="submit" value="작성">
+    <br>
+    <button type="submit">다음</button>
 </form>
-<h2>조건 충족하는 놈들</h2>
+
+<!-- <h2>조건 충족하는 놈들</h2>
+<div>남은 우편번호 : {{num}}개</div>
     <table>
         <tr>
             <th>우편번호</th>
@@ -42,7 +56,6 @@
             <td>{{item.place_code}}</td>
         </tr>
         {% endfor %}
-    </table>
+    </table> -->
 </body>
-</head>
 </html>

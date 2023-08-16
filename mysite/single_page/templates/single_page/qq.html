@@ -9,9 +9,10 @@
     <canvas class="canvas" width="300" height="100"></canvas>
 </head>
 <body>
-    <h1>걸러진 우편번호</h1>
-    <h3>
-        남은 우편번호 : {{num}}개
-    </h3>
+        <form action="{% url 'input' %}">
+            <h1>걸러진 우편번호</h1>
+            <h3>남은 우편번호 : {{ num }}개</h3>
+            <button onclick="executePath()">다음</button>
+        </form>
 </body>
 </html>
