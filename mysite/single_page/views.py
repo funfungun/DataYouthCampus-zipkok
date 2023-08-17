@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import loader
 from rest_framework.decorators import api_view
@@ -6,11 +6,13 @@ from .models import DataEngCsv
 from .serializers import TestDataSerializer
 from django.http import JsonResponse
 from .forms import AvgCostForm
+from django.core import serializers
+import json
+
 
 ##
 
 ##
-information = []
 
 def index(request):
     return render(
@@ -21,48 +23,16 @@ def index(request):
 def first(request):
     return render(
         request,
-        'single_page/autonomous.html'
+        'single_page/check_and_filter.html'
     )
 
-# def autonomous(request):
-#     ms = ['마포구', '서대문구', '종로구']
-#     latest_list = []
 
-#     if request.method == 'POST':
-#         selected_location = request.POST.getlist('DataEngCsv')
-
-#         for location in selected_location:
-#             if location == '마포구':
-#                 latest_list.extend(DataEngCsv.objects.filter(place_code=0))
-#             elif location == '서대문구':
-#                 latest_list.extend(DataEngCsv.objects.filter(place_code=1))
-#             elif location == '종로구':
-#                 latest_list.extend(DataEngCsv.objects.filter(place_code=2))
-#             elif location == '마포구'and location == '서대문구' :
-#                 latest_list.extend(DataEngCsv.objects.filter(place_code=[0,1]))
-#             elif location == '마포구'and location == '종로구' :
-#                 latest_list.extend(DataEngCsv.objects.filter(place_code=[0,2]))
-#             elif location == '서대문구'and location == '종로구' :
-#                 latest_list.extend(DataEngCsv.objects.filter(place_code=[1,2]))
-#             elif location == '마포구' and location == '서대문구'and location == '종로구' :
-#                 latest_list.extend(DataEngCsv.objects.filter(place_code=[0,1,2]))
-
-#         global information
-#         information = latest_list
-
-#         num = len(latest_list)
-#         print(information[0])
-#         # request.session['latest_list'] = latest_list
-#         return render(request, "single_page/price.html", {'num' : num})
-
-#     else:
-#         print("POST 요청이 아님")
-
-def autonomous(request):
-
+# 구 / 기격 한페이지에 하는 함수
+def check_and_filter(request):
     ms = ['마포구', '서대문구', '종로구']
     latest_list = []
-
+    #######
+    #구 먼저 지정
     if request.method == 'POST':  # POST 요청인지 확인
         selected_location = request.POST.getlist('DataEngCsv')
 
@@ -70,69 +40,12 @@ def autonomous(request):
             if location in ms:
                 place_code = ms.index(location)
                 latest_list.extend(DataEngCsv.objects.filter(place_code=place_code))
-        
-        global information
-        information = latest_list
 
-        num = len(latest_list)
-        return render(request, "single_page/price.html", {'num': num})
+        latest_list_codes = [item.zipcode for item in latest_list]
+        print(latest_list_codes)
 
-    else:  # POST 요청이 아닐 때
-        print("POST 요청이 아님")
-        return render(request, "single_page/autonomous.html")
-
-
-def price(request):
-    title = request.POST.get('title')
-    content = request.POST.get('content')
-    j = 0
-
-    if type(title) == str and type(content) == str:
-        mon = int(title)
-        monf = int(content)
-        r = 0.052  # 전월세변환율(5.2%)
-        j = mon + (monf * 12 / r)
-        print(j)
-
-        filtered_one = DataEngCsv.objects.filter(avg_cost__lte = j)
-
-        global information
-        information = [item for item in filtered_one if item in information]
-        print(information)
-        num = len(information)
-        return render(request, 'single_page/category.html', {'num': num})
-
-    else:
-        print("POST 요청이 아님")
-        return render(request, 'single_page/category.html')
-
-# 구 / 기격 한페이지에 하는 함수 ( url 연결은 아직 안 함 )
-def check_and_filter(request):
-    ms = ['마포구', '서대문구', '종로구']
-    latest_list = []
-
-    if request.method == 'POST':
-        selected_location = request.POST.getlist('DataEngCsv')
-
-        for location in selected_location:
-            if location == '마포구':
-                latest_list.extend(DataEngCsv.objects.filter(place_code=0))
-            elif location == '서대문구':
-                latest_list.extend(DataEngCsv.objects.filter(place_code=1))
-            elif location == '종로구':
-                latest_list.extend(DataEngCsv.objects.filter(place_code=2))
-            elif location == '마포구'and location == '서대문구' :
-                latest_list.extend(DataEngCsv.objects.filter(place_code=[0,1]))
-            elif location == '마포구'and location == '종로구' :
-                latest_list.extend(DataEngCsv.objects.filter(place_code=[0,2]))
-            elif location == '서대문구'and location == '종로구' :
-                latest_list.extend(DataEngCsv.objects.filter(place_code=[1,2]))
-            elif location == '마포구' and location == '서대문구'and location == '종로구' :
-                latest_list.extend(DataEngCsv.objects.filter(place_code=[0,1,2]))
-
-        
-        request.session['latest_list'] = [item.zipcode for item in latest_list]
-        
+    #########
+    #월세를 전세로 변환
     title = request.POST.get('title')
     content = request.POST.get('content')
     j = 0
@@ -141,23 +54,25 @@ def check_and_filter(request):
         monf = int(content)
         r = 0.052  # 전월세변환율(5.2%)
         j = mon + (monf * 12 / r)
-    
-    latest_list_codes = request.session.get('latest_list',[])
-    print(latest_list_codes)
-    len(latest_list_codes)
-    print(latest_list_codes[0])
-    print(j)
+
+    elif title and content is None and request.POST.get('selected_items') == 'year_check':
+        mon = int(title)
+        monf = 0
+        r = 0.052
+        j = mon + (monf * 12 / r)
+
     filtered_one = DataEngCsv.objects.filter(zipcode__in = latest_list_codes,avg_cost__lte=j)
-    
-    global information
-    information = [item for item in filtered_one ]
-    print(information)
-    num = len(information)
 
+    #필터로 넘겨주기 위해 json파일 형태로 직렬화
+    filter_1_data = [item.zipcode for item in filtered_one]
+    filter_1_serialized = json.dumps(filter_1_data)
+    request.session['filter_1'] = filter_1_serialized
 
-    print(filtered_one)
-    len(filtered_one)
-    return render(request, 'single_page/category.html',{'num':num,'filtered_one':filtered_one})
+    print(filter_1_serialized)
+    num = len(filter_1_data)
+    print(num)
+
+    return render(request, 'single_page/category.html',{'num':num})
 
 
 #카테고리 선택
@@ -166,16 +81,22 @@ def category(request):
         selected_items = request.POST.getlist('selected_items')
         print("선택된 항목:", selected_items)
 
-        # DataEngCsv 모델에서 selected_items에 해당하는 모든 컬럼이 1 이상인 데이터를 추출
-        filtered_data = DataEngCsv.objects.filter(**{f"{item}__gte": 1 for item in selected_items})
+        #이전 정보 session을 통해 값 가져옴
+        filter_1_serialized = request.session.get('filter_1', [])
+        filter_1_data = json.loads(filter_1_serialized)
 
-        
-        global information
-        #information = [item for item in filtered_data if item in information]
-        information = {item.zipcode:{'lat':item.lat,'lon':item.lon} for item in filtered_data if item in information}
-        print(information.keys())
-        num=len(information)
-        return render(request, 'single_page/input.html',{'num':num})
+
+        # DataEngCsv 모델에서 selected_items에 해당하는 모든 컬럼이 1 이상인 데이터를 추출
+        filtered_data = DataEngCsv.objects.filter(zipcode__in=filter_1_data, **{f"{item}__gte": 1 for item in selected_items})
+
+        filter_2 = {item.zipcode:{'lat':item.lat,'lon':item.lon} for item in filtered_data}
+        # 필터로 넘겨주기 위해 json파일 형태로 직렬화
+        filter_2_data = [{'zipcode': key, 'lat': value['lat'], 'lon': value['lon']} for key, value in filter_2.items()]
+        selected_items_serialized = json.dumps(selected_items)
+        request.session['selected_items'] = selected_items_serialized
+        print(filter_2.keys())
+        num=len(filter_2)
+        return render(request, 'single_page/input.html', {'num':num})
 
     else:
         print("POST 요청이 아님")
@@ -183,18 +104,30 @@ def category(request):
 #마지막페이지 
 def final_page(request):
     if request.method == 'POST':
+
+        # session으로 가져오기
+        filter_1_serialized = request.session.get('filter_1', [])
+        filter_1_data = json.loads(filter_1_serialized)
+        selected_items_serialized = request.session.get('selected_items', [])
+        selected_items = json.loads(selected_items_serialized)
+
+        # 가져온 정보로 다시 검색
+        filtered_data = DataEngCsv.objects.filter(zipcode__in=filter_1_data,
+                                                  **{f"{item}__gte": 1 for item in selected_items})
+        # final_recommend에 인풋값으로 쓰기 위해 딕셔너리로 변환
+        filter_2 = {item.zipcode: {'lat': item.lat, 'lon': item.lon} for item in filtered_data}
+
+        # 추가정보 받아오기
         destination = str(request.POST.get('destination'))
         limit_time = int(request.POST.get('limit_time'))
         transfer_count = int(request.POST.get('transfer_count'))
         pathtype = int(request.POST.get('pathtype'))
+        num = request.POST.get('num')
+        print(num)
 
-        
-        global information
-        # final_recommend에 인풋값으로 쓰기 위해 딕셔너리로 변환
-        information = {key:{'lat':value['lat'],'lon':value['lon']} for key, value in information.items()}
         # 우편번호 앞에 '0' 넣는 작업
         new_db = {}
-        for key,value in information.items():
+        for key,value in filter_2.items():
             new_key = f'0{key}'
             new_db[new_key] = value  
         api_key = "e8wHh2tya84M88aReEpXCa5XTQf3xgo01aZG39k5"
@@ -391,9 +324,15 @@ def final_recommend(dataset, zip_code_list, destination, limit_time, transfer_co
                 else:
                     result[zip_code_list[i]][d] = result[zip_code_list[i]]['totalTime'] - e
             result[zip_code_list[i]]['pathType'] = c['pathType']
-            result[zip_code_list[i]]['map'] = my_map
+            result[zip_code_list[i]]['map'] = my_map._repr_html_()
         else:
             result[zip_code_list[i]] = list()
     print(result)
     return result
     
+
+
+
+
+
+

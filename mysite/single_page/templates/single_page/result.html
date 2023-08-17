@@ -1,14 +1,29 @@
-{% load templatetags %}
-<link href="{% templatetags 'custom_filter.py' %}">
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <title>데이터 청년 캠퍼스</title>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <canvas class="canvas" width="300" height="100"></canvas>
 </head>
 <body>
-    <h1>{% for key in result_2|keys %}{{ key }}{% endfor %}</h1>
+    {% for key, value in result_2.items %}
+    <div> 
+        <ul>
+            <li><b>추천우편번호 : {{key}}</b></li>
+            <li>구 : {{value.city_gu}}</li>
+            <li>행정동 : {{value.admin_dong}}</li>
+            <li>법정동 : {{value.legal_dong}}</li>
+            <li>소요시간 : {{value.totalTime}}</li>
+            <li>지도 : {{value.map | safe}}</li>
+        </ul>
+    </div>
+    {% endfor %}
+    <script>
+        function goBack() {
+          window.history.back();
+        }
+    </script>
+<button onclick="goBack()">뒤로가기</button>
 </body>
 </html>
