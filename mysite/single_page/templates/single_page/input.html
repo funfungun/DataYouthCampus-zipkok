@@ -1,0 +1,46 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="'UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <canvas class="canvas" width="300" height="100"></canvas>
+    <title>데이터 청년 캠퍼스</title>
+    <script>
+
+    </script>
+</head>
+<body>
+<h2>남은 우편번호 : {{num}}개</h2>
+<form method="post" action="{% url 'final_page' %}">
+    {% csrf_token %}
+    <label for="destination">목적지:</label>
+    <input type="text" id="destination" name="destination">  
+
+    <label for="limit_time">출퇴근시간:</label>
+    <input type="number" id="limit_time" name="limit_time">  
+
+    <label for="transfer_count">환승 횟수:</label>
+    <input type="number" id="transfer_count" name="transfer_count">  
+
+    <label for="pathtype">가는 방식</label>  
+    <select name = 'pathtype' id = 'pathtype'>
+        <option value = 0>걷기</option>
+        <option value = 1>지하철</option>
+        <option value = 2>버스</option>
+        <option value = 3>지하철+버스</option>
+    </select>
+<button type="submit">완료</button>
+</form>
+<script>
+    function goBack() {
+      window.history.back();
+    }
+</script>
+<button onclick="goBack()">뒤로가기</button>
+</body>
+</html>
+
+<!-- <input type="number" id="pathtype" name="pathtype"> -->

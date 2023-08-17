@@ -1,8 +1,19 @@
-<html>
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>제발돼라</title>
+    <meta charset="'UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <canvas class="canvas" width="300" height="100"></canvas>
+    <title>데이터 청년 캠퍼스</title>
+    <script>
+
+    </script>
+</head>
 <body>
-<!-- Complete and Check Form -->
+<h2>[ 주거 희망하는 구 선택하기 ]</h2>
 <form action="{% url 'check_and_filter' %}" method = "post">
     {% csrf_token %}
     <div class="form-check">
@@ -19,16 +30,102 @@
         <input type="checkbox" value="종로구" id="Jonglo" name="DataEngCsv">
         <label for="Jonglo">종로구</label>
     </div>
-    <!-- <button type="submit">검색</button> -->
+
+    <h2>------------------------------------</h2>
+    <h2>[ 희망하는 금액 설정하기 ]</h2>
+    <form method="post">
+        <input type="radio" name="selected_items" id="month_check" value="month_check"> 월세
+        <input type="radio" name="selected_items" id="year_check" value="year_check"> 전세
+    
+        <h2>[ 전/월세 보증금 ]</h2>
+        <h3>(단위:만(원))</h3>
+        <input type="text" id="title" name="title">
+
+        <br><h2>[ 월 세 ]</h2>
+        <h3>(단위:만(원))</h3>
+        {% if not year_check %}
+            <input type="text" id="content" name="content">
+        {% else %}
+            <input type="text" id="content" name="content" disabled>
+        {% endif %}
+        <br>
+        <br>
+        <input type="submit" value="선택">
+    </form>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+             // "전세" 버튼의 변경 이벤트를 감지하는 함수
+            $('#year_check').change(function () {
+                toggleContentInput();
+            });
+            
+            // "월세" 버튼의 변경 이벤트를 감지하는 함수
+            $('#month_check').change(function () {
+            toggleContentInput();
+             });
+
+            // "전세" 버튼과 "월세" 버튼의 상태에 따라 "월 세" 입력란을 활성화 또는 비활성화하는 함수
+            function toggleContentInput() {
+                if ($('#year_check').prop('checked')) {
+                    $('#content').prop('disabled', true).val('');
+                } 
+                if ($('#month_check').prop('checked')) {
+                    $('#content').prop('disabled', false).val('');
+                } 
+            }
+
+            // 페이지 로드 시 초기 설정
+            toggleContentInput();
+        });
+    </script>
+
+
+
+
+<!-- {% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="'UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <canvas class="canvas" width="300" height="100"></canvas>
+    <title>데이터 청년 캠퍼스</title>
+    <script>
+
+    </script>
+</head>
+<body>
+<h2>주거 희망하는 구 선택하기</h2>
+<form action="{% url 'check_and_filter' %}" method = "post">
+    {% csrf_token %}
+    <div class="form-check">
+        <input type="checkbox" value="마포구" id="Mapo" name="DataEngCsv">
+        <label for="Mapo">마포구</label>
+    </div>
+
+    <div class="form-check">
+        <input type="checkbox" value="서대문구" id="Seodaemoon" name="DataEngCsv">
+        <label for="Seodaemoon">서대문구</label>
+    </div>
+
+    <div class="form-check">
+        <input type="checkbox" value="종로구" id="Jonglo" name="DataEngCsv">
+        <label for="Jonglo">종로구</label>
+    </div>
     <br>
     <h2>월세보증금(단위:만(원))</h2>
 <form method = 'post'>
     <input type="text" name="title">
     <br><h2>월세(단위:만(원))</h2>
     <input type="text" name="content">
-    <input type="submit" value="작성">
-</form>
-<h2>조건 충족하는 놈들</h2>
+    <input type="submit" value="선택">
+</form> -->
+<!-- <h2>조건 충족하는 놈들</h2>
+<div>남은 우편번호 : {{num}}개</div>
     <table>
         <tr>
             <th>우편번호</th>
@@ -42,7 +139,6 @@
             <td>{{item.place_code}}</td>
         </tr>
         {% endfor %}
-    </table>
+    </table> -->
 </body>
-</head>
 </html>
