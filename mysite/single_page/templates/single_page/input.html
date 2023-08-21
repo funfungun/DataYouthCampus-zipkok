@@ -8,22 +8,91 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <canvas class="canvas" width="300" height="100"></canvas>
     <title>데이터 청년 캠퍼스</title>
-    <script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: rgb(147,188,212);
+            color: white;
+            font-family: sans-serif;
+        }
 
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        label {
+            font-size: 24px;
+            margin-top: 10px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: 400px; /* 인풋박스 너비 설정 */
+            padding: 10px;
+            font-size: 18px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+
+        button[type="submit"],
+        button {
+            background-color: white;
+            font-family: sans-serif;
+            font-size: 18px;
+            font-weight: bolder;
+            text-shadow: 0px 3px 3px #c5c5c5;
+            padding: 10px 20px;
+            cursor: pointer;
+            border: 6px outset;
+            border-radius: 15px;
+            outline: none;
+            box-shadow: 3px 3px 3px grey;
+            margin: 10px;
+        }
+
+        button:hover {
+            background-color: lightgrey;
+            transform: scale(1.1);
+        }
+
+    </style>
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+        document.addEventListener("DOMContentLoaded", function() {
+            var numValue = {{ num }};
+            if (numValue === 0) {
+                alert("남은 우편번호가 없습니다. 카테고리를 다시 선택해주세요.");
+                goBack();
+            }
+        });
     </script>
 </head>
 <body>
 <h2>남은 우편번호 : {{num}}개</h2>
 <form method="post" action="{% url 'final_page' %}">
     {% csrf_token %}
-    <label for="destination">목적지:</label>
-    <input type="text" id="destination" name="destination">  
+    <label for="destination">목적지</label>
+    <input type="text" id="destination" name="destination" placeholder="상세주소">  
 
-    <label for="limit_time">출퇴근시간:</label>
+    <label for="limit_time">출퇴근시간</label>
     <input type="number" id="limit_time" name="limit_time">  
 
-    <label for="transfer_count">환승 횟수:</label>
-    <input type="number" id="transfer_count" name="transfer_count">  
+    <label for="transfer_count">환승 횟수</label>
+    <input type="number" id="transfer_count" name="transfer_count" placeholder="0~10">  
 
     <label for="pathtype">가는 방식</label>  
     <select name = 'pathtype' id = 'pathtype'>
@@ -34,13 +103,7 @@
     </select>
 <button type="submit">완료</button>
 </form>
-<script>
-    function goBack() {
-      window.history.back();
-    }
-</script>
+
 <button onclick="goBack()">뒤로가기</button>
 </body>
 </html>
-
-<!-- <input type="number" id="pathtype" name="pathtype"> -->
