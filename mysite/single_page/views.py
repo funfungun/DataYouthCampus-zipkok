@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.template import loader
 from rest_framework.decorators import api_view
 from .models import DataEngCsv
+from .models import DataEngCsv2
 from .serializers import TestDataSerializer
 from django.http import JsonResponse
 from .forms import AvgCostForm
@@ -39,7 +40,7 @@ def check_and_filter(request):
         for location in selected_location:
             if location in ms:
                 place_code = ms.index(location)
-                latest_list.extend(DataEngCsv.objects.filter(place_code=place_code))
+                latest_list.extend(DataEngCsv2.objects.filter(place_code=place_code))
 
         latest_list_codes = [item.zipcode for item in latest_list]
         print(latest_list_codes)
@@ -61,7 +62,7 @@ def check_and_filter(request):
         r = 0.052
         j = mon + (monf * 12 / r)
 
-    filtered_one = DataEngCsv.objects.filter(zipcode__in = latest_list_codes,avg_cost__lte=j)
+    filtered_one = DataEngCsv2.objects.filter(zipcode__in = latest_list_codes,avg_cost__lte=j)
 
     #필터로 넘겨주기 위해 json파일 형태로 직렬화
     filter_1_data = [item.zipcode for item in filtered_one]
@@ -87,7 +88,7 @@ def category(request):
 
 
         # DataEngCsv 모델에서 selected_items에 해당하는 모든 컬럼이 1 이상인 데이터를 추출
-        filtered_data = DataEngCsv.objects.filter(zipcode__in=filter_1_data, **{f"{item}__gte": 1 for item in selected_items})
+        filtered_data = DataEngCsv2.objects.filter(zipcode__in=filter_1_data, **{f"{item}__gte": 1 for item in selected_items})
 
         filter_2 = {item.zipcode:{'lat':item.lat,'lon':item.lon} for item in filtered_data}
         # 필터로 넘겨주기 위해 json파일 형태로 직렬화
@@ -115,7 +116,7 @@ def final_page(request):
         selected_items = json.loads(selected_items_serialized)
 
         # 가져온 정보로 다시 검색
-        filtered_data = DataEngCsv.objects.filter(zipcode__in=filter_1_data,
+        filtered_data = DataEngCsv2.objects.filter(zipcode__in=filter_1_data,
                                                   **{f"{item}__gte": 1 for item in selected_items})
         # final_recommend에 인풋값으로 쓰기 위해 딕셔너리로 변환
         filter_2 = {item.zipcode: {'lat': item.lat, 'lon': item.lon} for item in filtered_data}
