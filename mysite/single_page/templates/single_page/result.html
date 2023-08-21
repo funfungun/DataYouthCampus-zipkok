@@ -4,26 +4,96 @@
     <title>데이터 청년 캠퍼스</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <canvas class="canvas" width="300" height="100"></canvas>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: rgb(147,188,212);
+            color: white;
+            font-family: sans-serif;
+        }
+
+        .info-map-container {
+            display: flex;
+            align-items: flex-start; /* 왼쪽 정렬 */
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 10px;
+            width: 90%; /* 컨테이너 너비 조정 */
+        }
+
+        .info-container {
+            flex: 1; /* 남은 공간을 모두 차지 */
+            margin-right: 20px; /* 오른쪽 간격 설정 */
+        }
+
+        .map-container {
+            flex: 1; /* 남은 공간을 모두 차지 */
+            margin-left: 20px; /* 왼쪽 간격 설정 */
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            margin-left: 200px;
+            margin-top: 100px; /* 오른쪽 여백 추가 */
+        }
+
+        h3 {
+            margin: 0;
+            font-size: 40px; /* 제목 글자 크기 더 크게 조정 */
+        }
+
+        li {
+            margin-bottom: 10px;
+            font-size: 30px; /* 내용 글자 크기 더 크게 조정 */
+        }
+
+        button {
+            display: block;
+            margin: 20px auto;
+            background-color: white;
+            font-family: sans-serif;
+            font-size: 18px;
+            font-weight: bolder;
+            text-shadow: 0px 3px 3px #c5c5c5;
+            padding: 10px 20px;
+            cursor: pointer;
+            border: 6px outset;
+            border-radius: 15px;
+            outline: none;
+            box-shadow: 3px 3px 3px grey;
+        }
+
+        button:hover {
+            background-color: lightgrey;
+            transform: scale(1.1);
+        }
+    </style>
 </head>
 <body>
     {% for key, value in result_2.items %}
-    <div> 
-        <ul>
-            <li><b>추천우편번호 : {{key}}</b></li>
-            <li>구 : {{value.city_gu}}</li>
-            <li>행정동 : {{value.admin_dong}}</li>
-            <li>법정동 : {{value.legal_dong}}</li>
-            <li>소요시간 : {{value.totalTime}}</li>
-            <li>지도 : {{value.map | safe}}</li>
-        </ul>
+    <div class="info-map-container">
+        <div class="info-container">
+            <ul>
+                <li><h3><b>추천 우편번호 : {{key}}</b></h3></li>
+                <li>구 : {{value.city_gu}}</li>
+                <li>행정동 : {{value.admin_dong}}</li>
+                <li>법정동 : {{value.legal_dong}}</li>
+                <li>소요시간 : {{value.totalTime}}분</li>
+            </ul>
+        </div>
+        <div class="map-container">
+            {{value.map | safe}}
+        </div>
     </div>
     {% endfor %}
-    <script>
-        function goBack() {
-          window.history.back();
-        }
-    </script>
-<button onclick="goBack()">뒤로가기</button>
+    <button onclick="goBack()">뒤로가기</button>
 </body>
 </html>

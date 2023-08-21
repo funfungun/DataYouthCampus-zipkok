@@ -1,10 +1,11 @@
 body {
     text-align: center;
     background-size: 1500px 1500px;
-    background-color: rgb(77, 232, 219);
+    background-color: rgb(147,188,212);
     margin: 0 auto;
 }
-
+/* 민트 113,162,163 */
+/* 하늘색 느낌 147,188,212 */
 .container {
     display: flex;
     flex-wrap: wrap;
@@ -81,7 +82,7 @@ button:hover {
 
 /* Styling for the form */
 .form-check {
-    margin: 15px;
+    margin: 20px;
     display: flex;
     align-items: center;
     justify-content: center; /* Center the checkboxes and labels horizontally */
@@ -96,4 +97,20 @@ button:hover {
 
 .form-check label {
     cursor: pointer;
+}
+
+/* input[type="text"],
+input[type="checkbox"],
+input[type="number"],
+{
+    width: 300px; /* 원하는 너비로 조정 */
+    height: 40px; /* 원하는 높이로 조정 */
+    font-size: 16px; /* 원하는 폰트 크기로 조정 */
+    /* 추가적인 스타일링을 필요에 따라 적용 */
+/* } */ 
+
+.container input[type="text"] {
+    width: 300px;
+    height:40px;
+    font-size:16px;
 }

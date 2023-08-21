@@ -8,7 +8,7 @@ from django.http import JsonResponse
 from .forms import AvgCostForm
 from django.core import serializers
 import json
-
+from django.contrib import messages
 
 ##
 
@@ -96,15 +96,18 @@ def category(request):
         request.session['selected_items'] = selected_items_serialized
         print(filter_2.keys())
         num=len(filter_2)
-        return render(request, 'single_page/input.html', {'num':num})
 
+        return render(request, 'single_page/input.html', {'num':num})
+        
     else:
         print("POST 요청이 아님")
         return render(request, 'single_page/input.html')
+    
+
 #마지막페이지 
 def final_page(request):
     if request.method == 'POST':
-
+        
         # session으로 가져오기
         filter_1_serialized = request.session.get('filter_1', [])
         filter_1_data = json.loads(filter_1_serialized)
@@ -307,7 +310,7 @@ def final_recommend(dataset, zip_code_list, destination, limit_time, transfer_co
             c = b[b['totalTime'] == b['totalTime'].min()].iloc[0, :]
             path_list = Path_list(c['legs'])
             my_map = draw_map(path_list)
-            folium.TileLayer('OpenStreetMap', name=f'{zip_code_list[i]}', min_zoom=12, max_zoom=16, control=True, opacity=0.7).add_to(my_map)
+            folium.TileLayer('OpenStreetMap', name=f'{zip_code_list[i]}', min_zoom=8, max_zoom=16, control=True, opacity=0.7).add_to(my_map)
             folium.map.LayerControl('topleft', collapsed=False).add_to(my_map)
             city_gu, admin_dong, legal_dong = reverse_geo_coding(dep_lat, dep_lon, api_key)
             result[zip_code_list[i]] = dict()
@@ -327,6 +330,8 @@ def final_recommend(dataset, zip_code_list, destination, limit_time, transfer_co
             result[zip_code_list[i]]['map'] = my_map._repr_html_()
         else:
             result[zip_code_list[i]] = list()
+    sorted_result = sorted(result.items(), key=lambda item: item[1]['totalTime'])
+    result = dict(sorted_result)
     print(result)
     return result
     

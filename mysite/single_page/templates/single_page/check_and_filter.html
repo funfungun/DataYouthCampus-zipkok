@@ -8,9 +8,70 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <canvas class="canvas" width="300" height="100"></canvas>
     <title>데이터 청년 캠퍼스</title>
-    <script>
+    <style>
+        .form-check input[type="checkbox"],
+        .form-check input[type="radio"] {
+            width: 30px; /* 체크박스 및 라디오 버튼 가로 크기 조정 */
+            height: 30px; /* 체크박스 및 라디오 버튼 세로 크기 조정 */
+            margin-right: 10px; /* 체크박스와 텍스트 사이 간격 조정 */
+        }
 
-    </script>
+    /* 인풋태그의 크기 조정 */
+        input[type="text"] {
+            width: 150px; /* 원하는 크기로 조정 */
+            padding: 5px; /* 내부 여백 설정 */
+            border-radius: 5px; /* 둥근 테두리 설정 */
+            border: 1px solid #ccc; /* 테두리 스타일 설정 */
+        }
+
+        input[type="submit"] {
+            padding: 8px 15px; /* 내부 여백 설정 */
+            font-size: 25px; /* 버튼 및 라디오 버튼의 글자 크기 조정 */
+            border-radius: 5px; /* 둥근 테두리 설정 */
+            background-color: rgb(255, 255, 255); /* 배경색 설정 */
+            color: rgb(0, 0, 0); /* 글자색 설정 */
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s; /* 호버 효과 설정 */
+            width: 100px;
+            height: 60px;
+            margin-top: 10px;
+            
+        }
+    
+
+        input[type="submit"]:hover,
+        input[type="radio"]:hover {
+            background-color: lightgrey; /* 호버 시 배경색 변경 */
+            transform: scale(1.05); /* 호버 시 약간 확대됨 */
+        }
+        input#content {
+            width: 300px; /* 원하는 너비로 조정합니다 */
+            height: 40px; /* 원하는 높이로 조정합니다 */
+            font-size: 16px; /* 원하는 폰트 크기로 조정합니다 */
+        }
+        input#title {
+            width: 300px; /* 원하는 너비로 조정합니다 */
+            height: 40px; /* 원하는 높이로 조정합니다 */
+            font-size: 16px;
+        }
+        .radio-label {
+            font-size: 25px; /* 원하는 글자 크기로 조정 */
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            justify-content: center;
+            color:white;/* 버튼 간의 여백 조정 */
+        }
+
+        .radio-button {
+            width: 30px; /* 원하는 버튼 너비로 조정 */
+            height: 30px; /* 원하는 버튼 높이로 조정 */
+            margin-right: 8px;
+
+        }
+    </style>
+
+    
 </head>
 <body>
 <h2>[ 주거 희망하는 구 선택하기 ]</h2>
@@ -34,9 +95,11 @@
     <h2>------------------------------------</h2>
     <h2>[ 희망하는 금액 설정하기 ]</h2>
     <form method="post">
-        <input type="radio" name="selected_items" id="month_check" value="month_check"> 월세
-        <input type="radio" name="selected_items" id="year_check" value="year_check"> 전세
-    
+        <label for="month_check" class="radio-label">
+        <input type="radio" name="selected_items" id="month_check" value="month_check" class="radio-button">월세</label> 
+        <label for="year_check" class="radio-label">
+        <input type="radio" name="selected_items" id="year_check" value="year_check" class="radio-button"> 전세</label> 
+
         <h2>[ 전/월세 보증금 ]</h2>
         <h3>(단위:만(원))</h3>
         <input type="text" id="title" name="title">
@@ -80,65 +143,3 @@
             toggleContentInput();
         });
     </script>
-
-
-
-
-<!-- {% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="'UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <canvas class="canvas" width="300" height="100"></canvas>
-    <title>데이터 청년 캠퍼스</title>
-    <script>
-
-    </script>
-</head>
-<body>
-<h2>주거 희망하는 구 선택하기</h2>
-<form action="{% url 'check_and_filter' %}" method = "post">
-    {% csrf_token %}
-    <div class="form-check">
-        <input type="checkbox" value="마포구" id="Mapo" name="DataEngCsv">
-        <label for="Mapo">마포구</label>
-    </div>
-
-    <div class="form-check">
-        <input type="checkbox" value="서대문구" id="Seodaemoon" name="DataEngCsv">
-        <label for="Seodaemoon">서대문구</label>
-    </div>
-
-    <div class="form-check">
-        <input type="checkbox" value="종로구" id="Jonglo" name="DataEngCsv">
-        <label for="Jonglo">종로구</label>
-    </div>
-    <br>
-    <h2>월세보증금(단위:만(원))</h2>
-<form method = 'post'>
-    <input type="text" name="title">
-    <br><h2>월세(단위:만(원))</h2>
-    <input type="text" name="content">
-    <input type="submit" value="선택">
-</form> -->
-<!-- <h2>조건 충족하는 놈들</h2>
-<div>남은 우편번호 : {{num}}개</div>
-    <table>
-        <tr>
-            <th>우편번호</th>
-            <th>전세가</th>
-            <th>구코드</th>
-        </tr>
-        {% for item in filtered_one %}
-        <tr>
-            <td>{{item.zipcode}}</td>
-            <td>{{item.avg_cost}}</td>
-            <td>{{item.place_code}}</td>
-        </tr>
-        {% endfor %}
-    </table> -->
-</body>
-</html>
