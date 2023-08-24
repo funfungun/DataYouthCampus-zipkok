@@ -10,7 +10,6 @@ urlpatterns = [
     path('input/',views.category,name='category'),
     path('result/',views.final_page,name='final_page'),
     path('result/image/',views.image,name='image'),
-    
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
