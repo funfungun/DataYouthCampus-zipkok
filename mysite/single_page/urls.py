@@ -9,7 +9,7 @@ urlpatterns = [
     path('category/',views.check_and_filter, name='check_and_filter'),
     path('input/',views.category,name='category'),
     path('result/',views.final_page,name='final_page'),
-    path('image/',views.image,name='image'),
+    path('result/image/',views.image,name='image'),
     
 ]
 
