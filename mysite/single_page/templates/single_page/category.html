@@ -61,6 +61,7 @@
                 <label><input type="checkbox" name="selected_items" value="citizen_center"> 주민센터</label>
                 </div>
             </section>
+
             
             <section class="facility-section">
                 <h2> ▶ 교통  </h2>
@@ -71,7 +72,7 @@
                 </div>
             </section>
             
-            <section class="facility-section">
+            <section class="facility-section">    
                 <h2> ▶ 금융  </h2>
                 <div class="box">
                 <label><input type="checkbox" name="selected_items" value="bank"> 은행 </label>
@@ -144,7 +145,7 @@
                 </div>
             </section>
 
-            <button type="submit">다음</button>
+            <button type="submit" id="next">다음</button>
         </form> 
         <script>
             function goBack() {
@@ -154,10 +155,6 @@
     <button onclick="goBack()">뒤로가기</button>
 </body>
 </html>
-
-
-
-
 
 <!-- {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
