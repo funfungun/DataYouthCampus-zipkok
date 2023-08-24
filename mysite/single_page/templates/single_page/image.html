@@ -1,0 +1,46 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>데이터 청년 캠퍼스</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <canvas class="canvas" width="1000" height="600"></canvas>
+</head>
+<body>
+    
+    <details>
+        <summary> 인접시설정보 </summary><br/>
+        <iframe src="/static/image/please.html" alt="인접시설정보" width="960" height="540"></iframe>
+    </details><br/>
+    
+    <details>
+     <summary> 평균면적 </summary><br/>
+     <img src="/static/image/average_area.png" alt="평균면적" width="960" height="540">
+    </details><br/>
+
+    <details>
+        <summary> 평균가격 </summary><br/>
+        <img src="/static/image/average_price.png" alt="평균가격" width="960" height="540">
+    </details><br/>
+
+    <details>
+     <summary> 평균 건축년도 </summary><br/>
+     <img src="/static/image/average_year.png" alt="평균 건축년도" width="960" height="540">
+    </details><br/>
+
+    <details>
+        <summary> 평균 월세/신축 비율 </summary><br/>
+        <img src="/static/image/average_price_percent.png" alt="평균 월세/신축 비율" width="960" height="540">
+    </details><br/>
+
+    <details>
+        <summary> 주택유형 비율 </summary><br/>
+        <img src="/static/image/home_type.png" alt="주택유형 비율" width="960" height="540">
+    </details><br/>
+    
+
+</body>
+</html>
