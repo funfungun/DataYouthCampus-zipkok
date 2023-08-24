@@ -316,7 +316,6 @@ def walk_route(dep_lat,dep_lon,des_lat,des_lon,destination,api_key):
         "content-type": "application/json",
         "appKey": api_key
     }
-
     response = requests.post(url, json=payload, headers=headers)
     response=json.loads(response.text)
     response=pd.DataFrame(response['features'])

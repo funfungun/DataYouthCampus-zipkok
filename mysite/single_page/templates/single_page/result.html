@@ -12,7 +12,7 @@
         document.addEventListener("DOMContentLoaded", function() {
             var result_2 = {{ result_2 | safe }};  
             if (Object.keys(result_2).length === 0) {
-                alert("좀 돼라 이놈아");
+                alert("남은 우편번호가 없습니다. 다시 입력해주세요.");
                 goBack();
             }
         }); 

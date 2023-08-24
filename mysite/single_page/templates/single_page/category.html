@@ -44,7 +44,7 @@
 <body>
     <div>
         <h1>
-            인접시설 선택하기
+            [ 인접시설 선택하기 ]
         </h1>
         <h3>
             남은 우편번호 : {{num}}개
@@ -55,44 +55,44 @@
             {% csrf_token %}
             <section class="facility-section">
                 <h2> ▶ 공공기관 </h2>
-            <div class="box">
+                <div class="box">
                 <label><input type="checkbox" name="selected_items" value="police_office"> 경찰서</label>
                 <label><input type="checkbox" name="selected_items" value="post_office"> 우체국</label>
                 <label><input type="checkbox" name="selected_items" value="citizen_center"> 주민센터</label>
-            </div>
+                </div>
             </section>
 
             
             <section class="facility-section">
                 <h2> ▶ 교통  </h2>
-            <div class="box">
+                <div class="box">
                 <label><input type="checkbox" name="selected_items" value="bus_stop"> 버스 정류장</label>
                 <label><input type="checkbox" name="selected_items" value="bike"> 자전거 대여소</label>
                 <label><input type="checkbox" name="selected_items" value="subway"> 지하철 역</label>
-            </div>
+                </div>
             </section>
             
             <section class="facility-section">    
                 <h2> ▶ 금융  </h2>
-            <div class = "box">
+                <div class="box">
                 <label><input type="checkbox" name="selected_items" value="bank"> 은행 </label>
                 <label><input type="checkbox" name="selected_items" value="atm"> ATM </label>
-            </div>
+                </div>
             </section>
 
             <section class="facility-section">
                 <h2> ▶ 문화시설  </h2>
-            <div class = "box">
+                <div class="box">
                 <label><input type="checkbox" name="selected_items" value="perform_place"> 공연장 </label>
                 <label><input type="checkbox" name="selected_items" value="liberary"> 도서관 </label>
                 <label><input type="checkbox" name="selected_items" value="theater"> 영화관</label>
                 <label><input type="checkbox" name="selected_items" value="art"> 전시,미술관</label>
-            </div>
+                </div>
             </section>
 
             <section class="facility-section">
                 <h2> ▶ 생활시설  </h2>
-            <div class = "box">
+                <div class="box">
                 <label><input type="checkbox" name="selected_items" value="food_store"> 음식점 </label>
                 <label><input type="checkbox" name="selected_items" value="bar"> 유흥주점 </label>
                 <label><input type="checkbox" name="selected_items" value="cafe"> 카페, 디저트</label>
@@ -100,46 +100,49 @@
                 <label><input type="checkbox" name="selected_items" value="daiso"> 생활용품점</label>
                 <label><input type="checkbox" name="selected_items" value="banchan"> 반찬가게</label>
                 <br>
+                <br>
                 <label><input type="checkbox" name="selected_items" value="super_market"> 슈퍼마켓 </label>
                 <label><input type="checkbox" name="selected_items" value="big_mart"> 대형마트 </label>
                 <label><input type="checkbox" name="selected_items" value="shopping_center"> 쇼핑센터</label>
+                <br>
                 <br>
                 <label><input type="checkbox" name="selected_items" value="pc_room"> PC방</label>
                 <label><input type="checkbox" name="selected_items" value="coin_karaoke"> 코인노래방</label>
                 <label><input type="checkbox" name="selected_items" value="coin_wash_room"> 코인세탁</label>
                 <label><input type="checkbox" name="selected_items" value="beatuy_care"> 뷰티케어</label>
-            </div>
+                </div>
             </section>
 
             <section class="facility-section">
                 <h2> ▶ 운동시설 </h2>
-            <div class = "box">    
+                <div class="box">
                 <label><input type="checkbox" name="selected_items" value="gym"> 헬스클럽 </label>
                 <label><input type="checkbox" name="selected_items" value="yoga"> 요가 </label>
                 <label><input type="checkbox" name="selected_items" value="piilates"> 필라테스</label>
                 <label><input type="checkbox" name="selected_items" value="cross_fit"> 크로스핏</label>
                 <br>
+                <br>
                 <label><input type="checkbox" name="selected_items" value="park"> 공원</label>
                 <label><input type="checkbox" name="selected_items" value="gonggogng_gym"> 공공체육시설</label>
-            </div>
+                </div>
             </section>
 
             <section class="facility-section">
                 <h2> ▶ 의료  </h2>
-            <div class = "box">    
+                <div class="box">
                 <label><input type="checkbox" name="selected_items" value="hospital"> 병원 </label>
                 <label><input type="checkbox" name="selected_items" value="pharmacy"> 약국 </label>
                 <label><input type="checkbox" name="selected_items" value="animal_hospital"> 동물병원 </label>
-            </div>
+                </div>
             </section>
             
             <section class="facility-section">
                 <h2> ▶ 종교  </h2>
-            <div class = "box">
+                <div class="box">
                 <label><input type="checkbox" name="selected_items" value="church"> 교회 </label>
                 <label><input type="checkbox" name="selected_items" value="chatolic"> 성당 </label>
                 <label><input type="checkbox" name="selected_items" value="temple"> 절 </label>
-            </div>
+                </div>
             </section>
 
             <button type="submit" id="next">다음</button>
