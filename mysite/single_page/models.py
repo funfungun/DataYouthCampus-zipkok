@@ -143,7 +143,7 @@ class DataEngCsv(models.Model):
         db_table = 'data_eng_csv'
 
 
-class DataEngCsv2(models.Model):
+class DataEngCsv3(models.Model):
     zipcode = models.IntegerField(blank=True, null=False, primary_key=True)
     lat = models.FloatField(blank=True, null=True)
     lon = models.FloatField(blank=True, null=True)
@@ -194,7 +194,7 @@ class DataEngCsv2(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'data_eng_csv_2'
+        db_table = 'data_eng_csv_3'
 
 
 class DjangoAdminLog(models.Model):
