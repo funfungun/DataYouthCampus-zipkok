@@ -3,7 +3,6 @@ from django.http import HttpResponse
 from django.template import loader
 from rest_framework.decorators import api_view
 from .models import DataEngCsv
-from .models import DataEngCsv2
 from .serializers import TestDataSerializer
 from django.http import JsonResponse
 from .forms import AvgCostForm
@@ -11,9 +10,11 @@ from django.core import serializers
 import json
 from django.contrib import messages
 
-##
-
-##
+def image(request):
+    return render(
+        request,
+        'single_page/image.html'
+    )
 
 def index(request):
     return render(
@@ -146,14 +147,6 @@ def final_page(request):
         return render(request,'single_page/result.html',{'result_2' :result_2})
         
     return render(request, 'single_page/input.html')
-
-def qq(request):
-    return render(
-        request,
-        'single_page/qq.html'
-    )
-
-
 
 
 #######################################################################################################
@@ -293,52 +286,111 @@ def reverse_geo_coding(lat, lon, api_key):
     response = requests.get(url, headers=headers)
     result = json.loads(response.text)
     result = result['addressInfo']
-    city_gu, admin_dong, legal_dong = result['city_do'] + ' ' + result['gu_gun'], result['adminDong'], result['legalDong']
-    return city_gu, admin_dong, legal_dong
+    #'주소 추출'/'서울특별시' / '행정동' / '법정동' 추출
+    juso,city_gu, admin_dong, legal_dong = result['fullAddress'].split(',')[2],result['city_do'] + ' ' + result['gu_gun'], result['adminDong'], result['legalDong']
+    return juso,city_gu, admin_dong, legal_dong
 
+#걷는거 추가할까?
+def walk_route(dep_lat,dep_lon,des_lat,des_lon,destination,api_key):
+    juso=reverse_geo_coding(dep_lat,dep_lon,api_key)[0]
+    url = "https://apis.openapi.sk.com/tmap/routes/pedestrian?version=1&callback=function"
+
+    payload = {
+        "startX": dep_lon,
+        "startY": dep_lat,
+        "angle": 20,
+        "speed": 5,
+        "endPoiId": "10001",
+        "endX": des_lon,
+        "endY": des_lat,
+        "reqCoordType": "WGS84GEO",
+        "startName": f"{quote(juso)}",
+        "endName": f"{quote(destination)}",
+        "searchOption": "0",
+        "resCoordType": "WGS84GEO",
+        "sort": "index"
+    }
+    headers = {
+        "accept": "application/json",
+        "content-type": "application/json",
+        "appKey": api_key
+    }
+
+    response = requests.post(url, json=payload, headers=headers)
+    response=json.loads(response.text)
+    response=pd.DataFrame(response['features'])
+    result=dict()
+    result['0']=dict()
+    result['0']['totalTime']=response['properties'][0]['totalTime']
+    result['0']['type']='walk'
+    result['0']['pathType']='walk'
+    response=response['geometry']
+    b=list()
+    for i in range(len(response)):
+        if response[i]['type']=='LineString':
+            c=response[i]['coordinates']
+            for i in range(len(c)):
+                d=c[i]
+                e=(d[1],d[0])
+                b.append(e)
+    result['0']['path']=b
+    return result
 
 # 최종 함수
 def final_recommend(dataset, zip_code_list, destination, limit_time, transfer_count, pathtype, api_key):
     result = dict()
     for i in range(len(zip_code_list)):
+        
         dep_lat, dep_lon = dataset[zip_code_list[i]]['lat'], dataset[zip_code_list[i]]['lon']
         des_lat, des_lon = location_full(destination, api_key)
         print(i,des_lat,des_lon)
-        a = commute_route(dep_lat, dep_lon, des_lat, des_lon, api_key)
-        print(a)
-        b = route_condition_test(a, limit_time, transfer_count, pathtype)
-        if b.shape[0] > 0:
-            c = b[b['totalTime'] == b['totalTime'].min()].iloc[0, :]
-            path_list = Path_list(c['legs'])
-            my_map = draw_map(path_list)
-            folium.TileLayer('OpenStreetMap', name=f'{zip_code_list[i]}', min_zoom=8, max_zoom=16, control=True, opacity=0.7).add_to(my_map)
-            folium.map.LayerControl('topleft', collapsed=False).add_to(my_map)
-            city_gu, admin_dong, legal_dong = reverse_geo_coding(dep_lat, dep_lon, api_key)
-            result[zip_code_list[i]] = dict()
-            result[zip_code_list[i]]['city_gu'] = city_gu
-            result[zip_code_list[i]]['admin_dong'] = admin_dong
-            result[zip_code_list[i]]['legal_dong'] = legal_dong
-            result[zip_code_list[i]]['totalTime'] = c['totalTime'] // 60
-            e = 0
-            for j in range(len(path_list)):
-                d = path_list[f'{j}']['type'] + f'{j+1}'
-                if j < len(path_list) - 1:
-                    result[zip_code_list[i]][d] = path_list[f'{j}']['time'] // 60
-                    e += result[zip_code_list[i]][d]
-                else:
-                    result[zip_code_list[i]][d] = result[zip_code_list[i]]['totalTime'] - e
-            result[zip_code_list[i]]['pathType'] = c['pathType']
-            result[zip_code_list[i]]['map'] = my_map._repr_html_()
-        else:
-            result[zip_code_list[i]] = list()
-    sorted_result = sorted(result.items(), key=lambda item: item[1]['totalTime'])
+        if pathtype == 0 :
+            a=walk_route(dep_lat,dep_lon,des_lat,des_lon,destination,api_key)
+            c=walk_route(dep_lat,dep_lon,des_lat,des_lon,destination,api_key)
+            c['totalTime']=c['0']['totalTime']
+            c['pathType']=c['0']['pathType']
+            if (c['0']['totalTime']//60) <= limit_time :
+                result[zip_code_list[i]] = dict()
+                result[zip_code_list[i]]['walk_1'] = c['0']['totalTime']//60
+                result[zip_code_list[i]]['totalTime'] = c['totalTime'] // 60
+                my_map= draw_map(a)
+            else :
+                continue
+        else :
+            try:
+                a = commute_route(dep_lat, dep_lon, des_lat, des_lon, api_key)
+            except KeyError:
+                continue
+            b = route_condition_test(a, limit_time, transfer_count, pathtype)
+            if b.shape[0] > 0:
+                result[zip_code_list[i]] = dict()
+                c = b[b['totalTime'] == b['totalTime'].min()].iloc[0, :]
+                path_list = Path_list(c['legs'])
+                e = 0
+                result[zip_code_list[i]]['totalTime'] = c['totalTime'] // 60
+                for j in range(len(path_list)):
+                    d = path_list[f'{j}']['type'] + f'{j+1}'
+                    if j < len(path_list) - 1:
+                        result[zip_code_list[i]][d] = path_list[f'{j}']['time'] // 60
+                        e += result[zip_code_list[i]][d]
+                    else:
+                        result[zip_code_list[i]][d] = result[zip_code_list[i]]['totalTime'] - e
+                my_map = draw_map(path_list)
+            else :
+                continue
+        folium.TileLayer('OpenStreetMap', name=f'{zip_code_list[i]}', min_zoom=12, max_zoom=16, control=True, opacity=0.7).add_to(my_map)
+        folium.map.LayerControl('topleft', collapsed=False).add_to(my_map)
+        city_gu, admin_dong, legal_dong = reverse_geo_coding(dep_lat, dep_lon, api_key)[1:]       
+        result[zip_code_list[i]]['city_gu'] = city_gu
+        result[zip_code_list[i]]['admin_dong'] = admin_dong
+        result[zip_code_list[i]]['legal_dong'] = legal_dong
+        
+        result[zip_code_list[i]]['pathType'] = c['pathType']
+        result[zip_code_list[i]]['map'] = my_map._repr_html_()
+    try:
+        sorted_result = sorted(result.items(), key=lambda item: item[1]['totalTime'])
+    except KeyError:
+        sorted_result=dict()
     result = dict(sorted_result)
     print(result)
     return result
-    
-
-
-
-
-
-
