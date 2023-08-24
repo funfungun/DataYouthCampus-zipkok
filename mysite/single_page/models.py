@@ -89,60 +89,6 @@ class BlogPost(models.Model):
         db_table = 'blog_post'
 
 
-class DataEngCsv(models.Model):
-    zipcode = models.IntegerField(blank=True, null=False, primary_key=True)
-    lat = models.FloatField(blank=True, null=True)
-    lon = models.FloatField(blank=True, null=True)
-    avg_size = models.FloatField(blank=True, null=True)
-    avg_cost = models.FloatField(blank=True, null=True)
-    place_code = models.IntegerField(blank=True, null=True)
-    op_ratio = models.IntegerField(blank=True, null=True)
-    total_deal = models.IntegerField(blank=True, null=True)
-    month_fee_ratio = models.IntegerField(blank=True, null=True)
-    new_ratio = models.IntegerField(blank=True, null=True)
-    bus_stop = models.IntegerField(blank=True, null=True)
-    art = models.IntegerField(blank=True, null=True)
-    bike = models.IntegerField(blank=True, null=True)
-    gym = models.IntegerField(blank=True, null=True)
-    chatolic = models.IntegerField(blank=True, null=True)
-    hospital = models.IntegerField(blank=True, null=True)
-    perform_place = models.IntegerField(blank=True, null=True)
-    park = models.IntegerField(blank=True, null=True)
-    theater = models.IntegerField(blank=True, null=True)
-    subway = models.IntegerField(blank=True, null=True)
-    animal_hospital = models.IntegerField(blank=True, null=True)
-    beatuy_care = models.IntegerField(blank=True, null=True)
-    coin_karaoke = models.IntegerField(blank=True, null=True)
-    liberary = models.IntegerField(blank=True, null=True)
-    church = models.IntegerField(blank=True, null=True)
-    big_mart = models.IntegerField(blank=True, null=True)
-    gonggogng_gym = models.IntegerField(blank=True, null=True)
-    cafe = models.IntegerField(blank=True, null=True)
-    police_office = models.IntegerField(blank=True, null=True)
-    daiso = models.IntegerField(blank=True, null=True)
-    bar = models.IntegerField(blank=True, null=True)
-    shopping_center = models.IntegerField(blank=True, null=True)
-    super_market = models.IntegerField(blank=True, null=True)
-    pharmacy = models.IntegerField(blank=True, null=True)
-    banchan = models.IntegerField(blank=True, null=True)
-    convience_store = models.IntegerField(blank=True, null=True)
-    bank = models.IntegerField(blank=True, null=True)
-    coin_wash_room = models.IntegerField(blank=True, null=True)
-    yoga = models.IntegerField(blank=True, null=True)
-    cross_fit = models.IntegerField(blank=True, null=True)
-    atm = models.IntegerField(db_column='ATM', blank=True, null=True)  # Field name made lowercase.
-    food_store = models.IntegerField(blank=True, null=True)
-    post_office = models.IntegerField(blank=True, null=True)
-    pc_room = models.IntegerField(db_column='PC_room', blank=True, null=True)  # Field name made lowercase.
-    piilates = models.IntegerField(blank=True, null=True)
-    citizen_center = models.IntegerField(blank=True, null=True)
-    temple = models.IntegerField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'data_eng_csv'
-
-
 class DataEngCsv3(models.Model):
     zipcode = models.IntegerField(blank=True, null=False, primary_key=True)
     lat = models.FloatField(blank=True, null=True)

@@ -1,15 +1,6 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from django.template import loader
-from rest_framework.decorators import api_view
-from .models import DataEngCsv
+from django.shortcuts import render
 from .models import DataEngCsv3
-from .serializers import TestDataSerializer
-from django.http import JsonResponse
-from .forms import AvgCostForm
-from django.core import serializers
 import json
-from django.contrib import messages
 
 def image(request):
     return render(
@@ -30,7 +21,7 @@ def first(request):
     )
 
 
-# 구 / 기격 한페이지에 하는 함수
+# 구 / 가격 한페이지에 하는 함수
 def check_and_filter(request):
     ms = ['마포구', '서대문구', '종로구']
     latest_list = []
