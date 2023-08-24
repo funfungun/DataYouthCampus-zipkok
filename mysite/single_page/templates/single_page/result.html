@@ -1,23 +1,54 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+        
+        document.addEventListener("DOMContentLoaded", function() {
+            var result_2 = {{ result_2 | safe }};  
+            if (Object.keys(result_2).length === 0) {
+                alert("남은 우편번호가 없습니다. 다시 입력해주세요.");
+                goBack();
+            }
+        }); 
+    </script>
     <title>데이터 청년 캠퍼스</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <canvas class="canvas" width="300" height="100"></canvas>
+    
 </head>
 <body>
     {% for key, value in result_2.items %}
-    <div> 
-        <ul>
-            <li><b>추천우편번호 : {{key}}</b></li>
-            <li>구 : {{value.city_gu}}</li>
-            <li>행정동 : {{value.admin_dong}}</li>
-            <li>법정동 : {{value.legal_dong}}</li>
-            <li>소요시간 : {{value.totalTime}}</li>
-            <li>지도 : {{value.map | safe}}</li>
-        </ul>
+
+    <div class="info-map-container">
+        <div class="info-container">
+            <ul>
+                <li><h3><b>추천우편번호 : {{key}}</b></h3></li>
+                <li>구 : {{value.city_gu}}</li>
+                <li>행정동 : {{value.admin_dong}}</li>
+                <li>법정동 : {{value.legal_dong}}</li>
+                <li>소요시간 : {{value.totalTime}}분</li>
+            
+                <button class="button1" onclick="window.open('http://127.0.0.1:8000/image/', 'image_window', 'width=1000,height=600,location=no,status=no,scrollbars=yes');">관련정보보기</button>
+            </ul>
+        </div>
+        <div class="map-container">
+             {{value.map | safe}}
+        </div>
     </div>
+
+   <script>
+    document.getElementById("popupButton").addEventListener("click", function() {
+        window.open("{% url 'image' %}", "image_window", "width=1000,height=600,location=no,status=no,scrollbars=yes");
+    });
+   </script>
+
     {% endfor %}
     <script>
         function goBack() {

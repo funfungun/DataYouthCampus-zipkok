@@ -8,22 +8,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <canvas class="canvas" width="300" height="100"></canvas>
     <title>데이터 청년 캠퍼스</title>
+    
     <script>
-
+        function goBack() {
+            window.history.back();
+        }
+        document.addEventListener("DOMContentLoaded", function() {
+            var numValue = {{ num }};
+            if (numValue === 0) {
+                alert("남은 우편번호가 없습니다. 카테고리를 다시 선택해주세요.");
+                goBack();
+            }
+        });
     </script>
 </head>
 <body>
 <h2>남은 우편번호 : {{num}}개</h2>
 <form method="post" action="{% url 'final_page' %}">
     {% csrf_token %}
-    <label for="destination">목적지:</label>
-    <input type="text" id="destination" name="destination">  
+    <label for="destination">목적지</label>
+    <input type="text" id="destination" name="destination" placeholder="상세주소">  
 
-    <label for="limit_time">출퇴근시간:</label>
-    <input type="number" id="limit_time" name="limit_time">  
+    <label for="limit_time">출퇴근시간</label>
+    <input type="number" id="limit_time" name="limit_time" placeholder="분">  
 
-    <label for="transfer_count">환승 횟수:</label>
-    <input type="number" id="transfer_count" name="transfer_count">  
+    <label for="transfer_count">환승 횟수</label>
+    <input type="number" id="transfer_count" name="transfer_count" placeholder="0~10">  
 
     <label for="pathtype">가는 방식</label>  
     <select name = 'pathtype' id = 'pathtype'>
@@ -34,13 +44,7 @@
     </select>
 <button type="submit">완료</button>
 </form>
-<script>
-    function goBack() {
-      window.history.back();
-    }
-</script>
+
 <button onclick="goBack()">뒤로가기</button>
 </body>
 </html>
-
-<!-- <input type="number" id="pathtype" name="pathtype"> -->

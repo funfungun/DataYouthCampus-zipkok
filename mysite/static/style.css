@@ -1,9 +1,21 @@
 body {
     text-align: center;
     background-size: 1500px 1500px;
-    background-color: rgb(77, 232, 219);
+    background-color: rgb(147,188,212);
     margin: 0 auto;
+    color: rgb(255, 255, 255);
 }
+
+.box {
+    color: white;
+    background-color: rgb(64, 154, 206);
+    width: center;
+    height: center;
+    padding: 30px;
+    border: 1px solid black;
+    margin: 20px;
+    font-size: 20px;
+  }
 
 .container {
     display: flex;
@@ -28,7 +40,6 @@ h1 {
     color: white;
     font-style: initial;
     font-size: 80px;
-    text-shadow: 5px 5px rgb(95, 92, 92);
     text-align: center;
 }
 
@@ -47,7 +58,7 @@ h2 {
 h3 {
     font-size: 25px;
     text-align: center;
-    color: white;
+    color:white; 
 }
 
 h3 img {
@@ -74,6 +85,23 @@ button {
     box-shadow: 3px 3px 3px grey;
 }
 
+.button1 {
+    display: inline-block; 
+    margin: 0 auto; 
+    background-color: white; 
+    top: 30px; 
+    font-family: sans-serif; 
+    font-size: 20px; 
+    font-weight: bolder; 
+    padding: 10px;
+    cursor: pointer;
+    border: 9px outset; 
+    border-radius: 30px; 
+    position: relative;
+    outline: none; 
+}
+
+
 button:hover {
     background-color: lightgrey;
     transform: scale(1.1);
@@ -86,7 +114,7 @@ button:hover {
     align-items: center;
     justify-content: center; /* Center the checkboxes and labels horizontally */
     color: white;
-    font-size: 24px;
+    font-size: 30px;
 }
 
 .form-check input[type="checkbox"] {
@@ -96,4 +124,84 @@ button:hover {
 
 .form-check label {
     cursor: pointer;
+    font-size: 30px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    margin-left: 200px;
+    margin-top: 100px; 
+}
+
+li {
+    margin-bottom: 10px;
+    font-size: 30px; 
+}
+
+.info-map-container {
+    display: flex;
+    align-items: flex-start; 
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    padding: 20px;
+    margin: 10px;
+    width: 90%; 
+}
+
+.info-container {
+    flex: 1; 
+    margin-right: 20px; 
+
+}
+
+.map-container {
+    flex: 1; 
+    margin-left: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+label {
+    font-size: 24px;
+    margin-top: 10px;
+}
+
+input[type="text"],
+input[type="number"],
+select {
+    width: 400px; /* 인풋박스 너비 설정 */
+    padding: 10px;
+    font-size: 18px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
+
+button[type="submit"],
+button {
+    background-color: white;
+    font-family: sans-serif;
+    font-size: 18px;
+    font-weight: bolder;
+    text-shadow: 0px 3px 3px #c5c5c5;
+    padding: 10px 20px;
+    cursor: pointer;
+    border: 6px outset;
+    border-radius: 15px;
+    outline: none;
+    box-shadow: 3px 3px 3px grey;
+    margin: 10px;
+}
+
+button:hover {
+    background-color: lightgrey;
+    transform: scale(1.1);
 }
