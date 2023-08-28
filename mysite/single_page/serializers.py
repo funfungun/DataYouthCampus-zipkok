@@ -1,7 +1,7 @@
 from rest_framework.serializers import ModelSerializer
-from .models import DataEngCsv3
+from .models import DataEngCsv
 
 class TestDataSerializer(ModelSerializer):
     class Meta:
-        model = DataEngCsv3
+        model = DataEngCsv
         fields = '__all__'
