@@ -1,4 +1,5 @@
 {% load static %}
+{% load mathfilters %}
 <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
 
 <!DOCTYPE html>
@@ -12,7 +13,7 @@
         document.addEventListener("DOMContentLoaded", function() {
             var result_2 = {{ result_2 | safe }};  
             if (Object.keys(result_2).length === 0) {
-                alert("남은 우편번호가 없습니다. 다시 입력해주세요.");
+                alert("해당 조건을 만족하는 우편번호가 없습니다. 다시 선택해주세요.");
                 goBack();
             }
         }); 
@@ -25,31 +26,60 @@
 </head>
 <body>
     {% for key, value in result_2.items %}
-
-    <div class="info-map-container">
-        <div class="info-container">
-            <ul>
-                <li><h3><b>추천우편번호 : {{key}}</b></h3></li>
-                <li>구 : {{value.city_gu}}</li>
-                <li>행정동 : {{value.admin_dong}}</li>
-                <li>법정동 : {{value.legal_dong}}</li>
-                <li>소요시간 : {{value.totalTime}}분</li>
+        {% for key2, value2 in result_3.items %}
+        {% if key == key2 %}
+        <div class="info-map-container">
+            <div class="info-container">
+                <ul>
+                    <li><h3><b>추천우편번호 : {{key}}</b></h3></li>
+                    <li>주소 : {{value.city_gu}} {{value.admin_dong}}</li>
+                    {% if monf == 0 %}
+                        <li>전세 : {{value.avg_cost}}만원</li>
+                    {% endif %}
+                    {% if monf != 0 %}
+                        <li>보증금 : {{mon}}만원</li> 
+                        <li>월세 : {% with avg_cost_diff=value.avg_cost|sub:mon %}
+                            {% with avg_cost_diff_multiplied=avg_cost_diff|mul:0.052 %}
+                                {% with avg_cost_final=avg_cost_diff_multiplied|div:12 %}
+                                    {{ avg_cost_final|floatformat:0 }}만원
+                                {% endwith %}
+                            {% endwith %}
+                        {% endwith %}
+                        </li>
+                    {% endif %}
+                    <li>총 소요시간 : {{value.totalTime}}분</li>
+                    {% if value.walk_sum != 0 %}
+                        <li>걷기 : {{value.walk_sum}}분</li>
+                    {% endif %}
+                    {% if value.bus_sum != 0 %}
+                        <li>버스 : {{value.bus_sum}}분</li>
+                    {% endif %}
+                    {% if value.subway_sum != 0 %}
+                        <li>지하철 : {{value.subway_sum}}분</li>
+                    {% endif %}
+                    <button class="button1" onclick="window.open('{{key}}/', 'image_window', 'width=1000,height=600,location=no,status=no,scrollbars=yes');">관련정보보기</button>
+                </ul>
+            </div>
+            <div class="map-container">
+                {{value.map | safe}}
+            </div>
+            <div class="map-container">
+                {{value2.map2 | safe}}
+            </div>
             
-                <button class="button1" onclick="window.open('image/', 'image_window', 'width=1000,height=600,location=no,status=no,scrollbars=yes');">관련정보보기</button>
-            </ul>
         </div>
-        <div class="map-container">
-             {{value.map | safe}}
-        </div>
-    </div>
-
-   <script>
-    document.getElementById("popupButton").addEventListener("click", function() {
-        window.open("{% url 'image' %}", "image_window", "width=1000,height=600,location=no,status=no,scrollbars=yes");
-    });
-   </script>
-
+        {% endif %}
+        {% endfor %}
     {% endfor %}
+   
+<script>
+    document.getElementById("popupButton").addEventListener("click", function() {
+        var key = "{{key}}";
+        var url = key + "/";
+        window.open(url, "image_window", "width=1000,height=600,location=no,status=no,scrollbars=yes");
+    });
+</script>
+    
     <script>
         function goBack() {
           window.history.back();
@@ -58,3 +88,6 @@
 <button onclick="goBack()">뒤로가기</button>
 </body>
 </html>
+
+
+
