@@ -8,7 +8,17 @@
     <title>데이터 청년 캠퍼스</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <canvas class="canvas" width="1000" height="600"></canvas>
+    <style>
+        body {
+            margin-top: 0;
+            padding: 0;
+        }
+
+        .section {
+            padding-top: 10px; /* 원하는 크기로 조정 */
+        }
+    </style>
+
 </head>
 
 <body>
@@ -27,7 +37,6 @@
                     <li><a href="#avg_area">평균면적</a></li>
                     <li><a href="#avg_price">평균가격</a></li>
                     <li><a href="#avg_year">평균 건축년도</a></li>
-                    <li><a href="#avg_rent">평균 월세/신축 비율</a></li>
                     <li><a href="#house_type">주택유형 비율</a></li>
                     <li><a href="#real_estate">부동산</a></li>
                 </ul>
@@ -48,11 +57,6 @@
     <div id="avg_year" class="section">
         <h3>평균 건축년도</h3>
         <img src="/static/image/03091_건축년도.png" alt="평균 건축년도" width="960" height="540">
-    </div>
-
-    <div id="avg_rent" class="section">
-        <h3>평균 월세/신축 비율</h3>
-        <img src="/static/image/03091_월세,신축.png" alt="평균 월세/신축 비율" width="960" height="540">
     </div>
 
     <div id="house_type" class="section">

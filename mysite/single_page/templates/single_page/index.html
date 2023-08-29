@@ -9,16 +9,14 @@
         <meta name="viewport" content="width=device-width", initial-scale="1">
         <title>집! 콕!</title>
     </head>
+    <style>
+        body {
+        background-image: url('static/homes.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+    </style>
     <body>
-        <style type="text/css">
-            .jumbotron {
-                background-image: url('../../../static/homes.jpg');
-                padding: 250px;
-                margin-bottom: 30px;
-                text-shadow: black 0.2em 0.2em 0.2em;
-                color: white;
-            }
-        </style>
         <nav class="navbar navbar-default">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -42,23 +40,12 @@
             </div>
         </nav>
         <div class="container">
-            <div class="jumbotron">
-            </div>
             <div class="row">
                 <div class="col-md-6 col-md-offset-3 text-center">
                     <p><a class="btn btn-default btn-lg" href="check_and_filter/">시작하기</a></p>
                 </div>
             </div>
-            <hr>
         </div>
-        <footer class="footer-fixed" style="background-color: rgb(64, 154, 206); color: #ffffff">
-            <div class="container">
-                <br>
-                <div class="row">
-                    <div class="col-sm-2" style="text-align: center;"><h5>Copyright &copy; 2023</h5><h5>Orara..?</h5></div>
-                </div>
-            </div>
-        </footer>
         <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
         <script src="{% static 'bootstrap.js' %}"></script>
     </body>

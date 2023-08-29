@@ -409,6 +409,7 @@ def final_recommend(dataset, zip_code_list, destination, limit_time, transfer_co
         dep_lat, dep_lon = dataset[zip_code_list[i]]['lat'], dataset[zip_code_list[i]]['lon']
         if len(destination.split())<3:
             destination=full_name(destination,api_key)
+
         des_lat, des_lon = location_full(destination, api_key)
         print(i,des_lat,des_lon)
         # 사용자가 걷기를 선택한 경우

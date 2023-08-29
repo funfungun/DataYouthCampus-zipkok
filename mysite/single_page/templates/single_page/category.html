@@ -9,32 +9,23 @@
         <meta name="viewport" content="width=device-width", initial-scale="1">
         <title>집! 콕!</title>
     </head>
+
+    <style>
+        body{
+            background-color: #519ecb;
+        }
+        h3{
+            text-align: center;
+            color:rgb(255, 255, 255);
+        }
+
+        .list-group-item.list-group-item-success {
+        font-weight: bold;
+        }
+      
+    </style>
     <body>
-        <style type="text/css">
-            blockquote {
-                background: #f9f9f9;
-                border-Left: 10px solid #cccccc;
-                margin: 1.5em 10px;
-                padding: 0.5em 10px;
-                quotes: "\201C""\201D""\2018""\2019";
-            }
-            blockquote:before {
-                color: #cccccc;
-                content: open-quote;
-                font-size: 3em;
-                line-height: 0.1em;
-                margin-Left: 11.5em;
-                vertical-align: -0.4em;
-            }
-            blockquote:after {
-                color: #cccccc;
-                content: close-quote;
-                font-size: 3em;
-                line-height: 0.1em;
-                margin-left: 0.25em;
-                vertical-align: -0.4em;
-            }
-        </style>
+        
         <nav class="navbar navbar-default">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -49,17 +40,17 @@
                 </div>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav navbar-center">
-                        <li class="active"><a href="#">지역/금액 선택<span class="sr-only"></span></a></li>
-                        <li><a href="#">인접시설 선택</a></li>
+                        <li><a href="#">지역/금액 선택<span class="sr-only"></span></a></li>
+                        <li class="active"><a href="#">인접시설 선택</a></li>
                         <li><a href="#">세부사항 입력</a></li>
                         <li><a href="#">결과 확인</a></li>
                     </ul>
                 </div>
             </div>
         </nav>
-        <div class="panel-footer">
-            <blockquote>&nbsp;남은 우편번호 수 : {{num}} </blockquote>
-        </div>
+
+        <div><h3><b>남은 우편번호 수 : {{num}}</b></h3></div> 
+
         <hr>
         <form id="checkbox-form" method="post" action="{% url 'category' %}">
             {% csrf_token %}
@@ -157,14 +148,6 @@
                 <input type="submit" value="다음" class="btn btn-primary">
             </div>
         </form>
-        <footer class="footer-fixed" style="background-color: rgb(64, 154, 206); color: #ffffff">
-            <div class="container">
-                <br>
-                <div class="row">
-                    <div class="col-sm-2" style="text-align: center;"><h5>Copyright &copy; 2023</h5><h5>Orara..?</h5></div>
-                </div>
-            </div>
-        </footer>
         <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
         <script src="{% static 'bootstrap.js' %}"></script>
 

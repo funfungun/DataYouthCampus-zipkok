@@ -24,29 +24,24 @@
         </script>
     </head>
     <body>
-        <style type="text/css">
-            blockquote {
-                background: #f9f9f9;
-                border-Left: 10px solid #cccccc;
-                margin: 1.5em 10px;
-                padding: 0.5em 10px;
-                quotes: "\201C""\201D""\2018""\2019";
+        <style>
+           body{
+                background-color: #519ecb;
+                color:white;
             }
-            blockquote:before {
-                color: #cccccc;
-                content: open-quote;
-                font-size: 3em;
-                line-height: 0.1em;
-                margin-Left: 11.5em;
-                vertical-align: -0.4em;
+            .text-center{
+                list-style: none;
+                justify-content: center;
+                padding: 0;
             }
-            blockquote:after {
-                color: #cccccc;
-                content: close-quote;
-                font-size: 3em;
-                line-height: 0.1em;
-                margin-left: 0.25em;
-                vertical-align: -0.4em;
+            div {
+                text-align: center;
+            }
+            .button1 {
+                color:black;
+            }
+            li {
+                font-size: 20px;
             }
         </style>
         <nav class="navbar navbar-default">
@@ -71,6 +66,7 @@
                 </div>
             </div>
         </nav>
+
         {% for key, value in result_2.items %}
     {% for key2, value2 in result_3.items %}
     {% if key == key2 %}
@@ -79,7 +75,7 @@
             <div class="col-md-12"> <!-- 나머지 정보 -->
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="map-container">
+                        
                             <ul class="text-center">
                                 <li><h3><b>추천우편번호 : {{key}}</b></h3></li>
                                 <li>주소 : {{value.city_gu}} {{value.admin_dong}}</li>
@@ -107,9 +103,10 @@
                                 {% if value.subway_sum != 0 %}
                                     <li>지하철 : {{value.subway_sum}}분</li>
                                 {% endif %}
-                                <button class="button1" onclick="window.open('{{key}}/', 'image_window', 'width=1000,height=600,location=no,status=no,scrollbars=yes');">관련정보보기</button>
+                                
                             </ul>
-                        </div>
+                        <div><button class="button1" onclick="window.open('{{key}}/', 'image_window', 'width=1000,height=600,location=no,status=no,scrollbars=yes');">관련정보보기</button></div>
+                        <br>
                     </div>
                 </div>
             </div>
@@ -122,11 +119,10 @@
                 <div class="map-container">
                     {{value2.map2 | safe}}
                 </div>
+            
             </div>
         </div>
     </div>
-    <hr>
-    <hr>
     {% endif %}
     {% endfor %}
     {% endfor %}
@@ -144,7 +140,7 @@
             document.getElementById("popupButton").addEventListener("click", function() {
                 var key = "{{key}}";
                 var url = key + "/";
-                window.open(url, "image_window", "width=1000,height=600,location=no,status=no,scrollbars=yes");
+                window.open(url, "image_window", "width=600,height=450,location=no,status=no,scrollbars=yes");
             });
         </script>
         <script>
@@ -154,3 +150,6 @@
         </script>
     </body>
 </html>
+
+
+
