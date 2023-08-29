@@ -407,6 +407,8 @@ def final_recommend(dataset, zip_code_list, destination, limit_time, transfer_co
     for i in range(len(zip_code_list)):
         
         dep_lat, dep_lon = dataset[zip_code_list[i]]['lat'], dataset[zip_code_list[i]]['lon']
+        if len(destination.split())<3:
+            destination=full_name(destination,api_key)
         des_lat, des_lon = location_full(destination, api_key)
         print(i,des_lat,des_lon)
         # 사용자가 걷기를 선택한 경우
@@ -488,11 +490,15 @@ def final_recommend(dataset, zip_code_list, destination, limit_time, transfer_co
     try:
         # 이동시간이 적은 순서대로 정렬
         sorted_result = sorted(result.items(), key=lambda item: item[1]['totalTime'])
+        # 이동시간이 가장 적은 세개의 우편번호 추천
+        # top_three = sorted_result[:3]
+        # sorted_result = {key:value for key,value in top_three}
     except KeyError:
         sorted_result=dict()
     result = dict(sorted_result)
     
     return result
+
 
 # 해당 우편번호의 500m 반경 카테고리들의 종류 및 위치 보여주는 함수모음
 
@@ -600,7 +606,7 @@ def facility_map(dict_file,check_list):
         categories=category_list() # 필드명 불러오기
         facility_info=dict_file[zip_code] # 우편번호별 카테고리 정보들 저장
         center=(facility_info['lat'],facility_info['lon']) #해당 우편번호의 중심좌표
-        my_map=folium.Map(location=center,zoom_start=16,tiles=None)
+        my_map=folium.Map(location=center,zoom_start=15,tiles=None)
         result[zip_code]=dict()
     #opacity: 지도 배경의 불투명도
         folium.TileLayer('OpenStreetMap',min_zoom=14,max_zoom=18,name=f'{zip_code}',control=False,opacity=0.7).add_to(my_map)
@@ -662,5 +668,26 @@ def facility_map(dict_file,check_list):
         my_map.get_root().html.add_child(folium.Element(js_code))
         # 최종 지도 생성
         result[zip_code]['map2']=my_map._repr_html_()
+    
+    return result
+
+def full_name(name,api_key):
+    location=quote(name)
+    url = f"https://apis.openapi.sk.com/tmap/pois?version=1&searchKeyword={location}&searchType=all&searchtypCd=A&reqCoordType=WGS84GEO&resCoordType=WGS84GEO&page=1&count=1&multiPoint=N&poiGroupYn=N"
+
+    headers = {
+        "Accept": "application/json",
+        "appKey": "e8wHh2tya84M88aReEpXCa5XTQf3xgo01aZG39k5"
+    }
+
+    response = requests.get(url, headers=headers)
+    response=json.loads(response.text)
+    result=response['searchPoiInfo']['pois']['poi'][0]['newAddressList']['newAddress'][0]['fullAddressRoad']
+    result=result[:2]+'특별시'+result[2:]
+    
+    if result[:2]=='서울':
+        result=result[:2]+'특별시'+result[2:]
+    else :
+        result=result[:2]+'도'+result[2:]
     
     return result

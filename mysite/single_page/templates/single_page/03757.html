@@ -1,5 +1,6 @@
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
 <!DOCTYPE html>
 <html lang="en">
@@ -11,33 +12,75 @@
 </head>
 
 <body>
-    
-    <details>
-     <summary> 평균면적 </summary><br/>
-     <img src="/static/image/03757_평균면적.png" alt="평균면적" width="960" height="540">
-    </details><br/>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="#avg_area">평균면적</a></li>
+                    <li><a href="#avg_price">평균가격</a></li>
+                    <li><a href="#avg_year">평균 건축년도</a></li>
+                    <li><a href="#avg_rent">평균 월세/신축 비율</a></li>
+                    <li><a href="#house_type">주택유형 비율</a></li>
+                    <li><a href="#real_estate">부동산</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-    <details>
-        <summary> 평균가격 </summary><br/>
+    <div id="avg_area" class="section">
+        <h3>평균면적</h3>
+        <img src="/static/image/03757_평균면적.png" alt="평균면적" width="960" height="540">
+    </div>
+
+    <div id="avg_price" class="section">
+        <h3>평균가격</h3>
         <img src="/static/image/03757_평균가격.png" alt="평균가격" width="960" height="540">
-    </details><br/>
+    </div>
 
-    <details>
-     <summary> 평균 건축년도 </summary><br/>
-     <img src="/static/image/03757_건축년도.png" alt="평균 건축년도" width="960" height="540">
-    </details><br/>
+    <div id="avg_year" class="section">
+        <h3>평균 건축년도</h3>
+        <img src="/static/image/03757_건축년도.png" alt="평균 건축년도" width="960" height="540">
+    </div>
 
-    <details>
-        <summary> 평균 월세/신축 비율 </summary><br/>
+    <div id="avg_rent" class="section">
+        <h3>평균 월세/신축 비율</h3>
         <img src="/static/image/03757_월세,신축.png" alt="평균 월세/신축 비율" width="960" height="540">
-    </details><br/>
+    </div>
 
-    <details>
-        <summary> 주택유형 비율 </summary><br/>
+    <div id="house_type" class="section">
+        <h3>주택유형 비율</h3>
         <img src="/static/image/03757_주택유형.png" alt="주택유형 비율" width="960" height="540">
-    </details><br/>
-    
+    </div>
 
+    <div id="real_estate" class="section">
+        <h3>부동산</h3>
+        <img src="/static/image/부동산.png" alt="부동산" width="960" height="540">
+    </div>
+
+    <!-- Bootstrap 3.3 jQuery 및 스크립트 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            // 내비게이션 바의 링크 클릭 시 해당 섹션 이미지 표시
+            $('a[href^="#"]').on('click', function(event) {
+                var target = $(this.getAttribute('href'));
+                if (target.length) {
+                    event.preventDefault();
+                    $('.section').hide();  // 모든 섹션 숨기기
+                    target.show();         // 선택한 섹션 표시
+                }
+            });
+        });
+    </script>
 </body>
-
 </html>
