@@ -23,29 +23,19 @@
     </head>
     <body>
         <style type="text/css">
-            blockquote {
-                background: #f9f9f9;
-                border-Left: 10px solid #cccccc;
-                margin: 1.5em 10px;
-                padding: 0.5em 10px;
-                quotes: "\201C""\201D""\2018""\2019";
+            body{
+            background-color: #519ecb;
             }
-            blockquote:before {
-                color: #cccccc;
-                content: open-quote;
-                font-size: 3em;
-                line-height: 0.1em;
-                margin-Left: 11.5em;
-                vertical-align: -0.4em;
+            h3{
+                text-align: center;
+                color:rgb(255, 255, 255);
             }
-            blockquote:after {
-                color: #cccccc;
-                content: close-quote;
-                font-size: 3em;
-                line-height: 0.1em;
-                margin-left: 0.25em;
-                vertical-align: -0.4em;
+
+            .form-group {
+                color :rgb(255, 255, 255);
+                font-size: 18px;
             }
+          
         </style>
         <nav class="navbar navbar-default">
             <div class="container-fluid">
@@ -69,9 +59,9 @@
                 </div>
             </div>
         </nav>
-        <div class="panel-footer">
-            <blockquote>&nbsp;남은 우편번호 수 : {{num}} </blockquote>
-        </div>
+        
+            <div><h3><b>남은 우편번호 수 : {{num}}</b></h3></div>
+        
         <hr>
         <form method="post" action="{% url 'final_page' %}">
             {% csrf_token %}
@@ -82,19 +72,19 @@
                             <span class="input-group-addon">목적지</span>
                             <input type="text" class="form-control" id="destination" name="destination" placeholder="서울시청 혹은 서울 중구 세종대로 110">
                         </div>
-
+                        <br>
                         <div class="input-group">
                             <span class="input-group-addon">출퇴근시간</span>
                             <input type="number" class="form-control" id="limit_time" name="limit_time" placeholder="최대 출퇴근시간">
                             <span class="input-group-addon">분</span>
                         </div>
-
+                        <br>
                         <div class="input-group">
                             <span class="input-group-addon">환승 횟수</span>
                             <input type="number" class="form-control" id="transfer_count" name="transfer_count" placeholder="최대 환승 횟수">
                             <span class="input-group-addon">번</span>
                         </div>
-                        
+                        <br>
                         <div class="form-group">
                             <label for="pathtype">가는 방식</label>
                             <select class="form-control" name="pathtype" id="pathtype">
@@ -112,14 +102,7 @@
             </div>
         </form>
         <hr>
-        <footer class="footer-fixed" style="background-color: rgb(64, 154, 206); color: #ffffff">
-            <div class="container">
-                <br>
-                <div class="row">
-                    <div class="col-sm-2" style="text-align: center;"><h5>Copyright &copy; 2023</h5><h5>Orara..?</h5></div>
-                </div>
-            </div>
-        </footer>
+        
         <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
         <script src="{% static 'bootstrap.js' %}"></script>
     </body>
