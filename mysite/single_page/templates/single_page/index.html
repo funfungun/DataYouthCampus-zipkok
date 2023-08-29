@@ -1,30 +1,65 @@
 {% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'bootstrap.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'homes.css' %}">
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="'UTF-8">
-    <canvas class="canvas" width="300" height="100"></canvas>
-    <title>데이터 청년 캠퍼스</title>
-    <script>
-        function executePath() {
-            window.location.href = "check_and_filter/";
-        }
-    </script>
-</head>
-
-<body>
-    <div>
-        <h1>
-            구해줘 홈즈
-        </h1>
-    </div>
-    <div>
-        <button onclick="executePath()">시작하기</button>
-    </div>
-
-
-</body>
-
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width", initial-scale="1">
+        <title>집! 콕!</title>
+    </head>
+    <body>
+        <style type="text/css">
+            .jumbotron {
+                background-image: url('../../../static/homes.jpg');
+                padding: 250px;
+                margin-bottom: 30px;
+                text-shadow: black 0.2em 0.2em 0.2em;
+                color: white;
+            }
+        </style>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">메인화면</a>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-center">
+                        <li><a href="#">지역/금액 선택<span class="sr-only"></span></a></li>
+                        <li><a href="#">인접시설 선택</a></li>
+                        <li><a href="#">세부사항 입력</a></li>
+                        <li><a href="#">결과 확인</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="container">
+            <div class="jumbotron">
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 text-center">
+                    <p><a class="btn btn-default btn-lg" href="check_and_filter/">시작하기</a></p>
+                </div>
+            </div>
+            <hr>
+        </div>
+        <footer class="footer-fixed" style="background-color: rgb(64, 154, 206); color: #ffffff">
+            <div class="container">
+                <br>
+                <div class="row">
+                    <div class="col-sm-2" style="text-align: center;"><h5>Copyright &copy; 2023</h5><h5>Orara..?</h5></div>
+                </div>
+            </div>
+        </footer>
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+        <script src="{% static 'bootstrap.js' %}"></script>
+    </body>
 </html>

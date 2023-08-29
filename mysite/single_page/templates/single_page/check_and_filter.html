@@ -1,147 +1,166 @@
 {% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'bootstrap.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'homes.css' %}">
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="'UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <canvas class="canvas" width="300" height="100"></canvas>
-    <title>데이터 청년 캠퍼스</title>
-    <style>
-        .form-check input[type="checkbox"],
-        .form-check input[type="radio"] {
-            width: 30px; /* 체크박스 및 라디오 버튼 가로 크기 조정 */
-            height: 30px; /* 체크박스 및 라디오 버튼 세로 크기 조정 */
-            margin-right: 10px; /* 체크박스와 텍스트 사이 간격 조정 */
-        }
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width", initial-scale="1">
+        <title>집! 콕!</title>
+    </head>
+    <body>
+        <style type="text/css">
+            blockquote {
+                background: #f9f9f9;
+                border-Left: 10px solid #cccccc;
+                margin: 1.5em 10px;
+                padding: 0.5em 10px;
+                quotes: "\201C""\201D""\2018""\2019";
+            }
+            blockquote:before {
+                color: #cccccc;
+                content: open-quote;
+                font-size: 3em;
+                line-height: 0.1em;
+                margin-Left: 11.5em;
+                vertical-align: -0.4em;
+            }
+            blockquote:after {
+                color: #cccccc;
+                content: close-quote;
+                font-size: 3em;
+                line-height: 0.1em;
+                margin-left: 0.25em;
+                vertical-align: -0.4em;
+            }
+        </style>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">메인화면</a>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-center">
+                        <li class="active"><a href="#">지역/금액 선택<span class="sr-only"></span></a></li>
+                        <li><a href="#">인접시설 선택</a></li>
+                        <li><a href="#">세부사항 입력</a></li>
+                        <li><a href="#">결과 확인</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="panel-footer">
+            <blockquote>&nbsp;남은 우편번호 수 : 498 </blockquote>
+        </div>
 
-    /* 인풋태그의 크기 조정 */
-        input[type="text"] {
-            width: 150px; /* 원하는 크기로 조정 */
-            padding: 5px; /* 내부 여백 설정 */
-            border-radius: 5px; /* 둥근 테두리 설정 */
-            border: 1px solid #ccc; /* 테두리 스타일 설정 */
-        }
-
-        input[type="submit"] {
-            padding: 8px 15px; /* 내부 여백 설정 */
-            font-size: 25px; /* 버튼 및 라디오 버튼의 글자 크기 조정 */
-            border-radius: 5px; /* 둥근 테두리 설정 */
-            background-color: rgb(255, 255, 255); /* 배경색 설정 */
-            color: rgb(0, 0, 0); /* 글자색 설정 */
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.3s; /* 호버 효과 설정 */
-            width: 100px;
-            height: 60px;
-            margin-top: 10px;
+        <form action="{% url 'check_and_filter' %}" method = "post">
+            {% csrf_token %}
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3">
+                        <div class="list-group text-center">
+                            <br>
+                            <a class="list-group-item list-group-item-success">주거 희망하는 구 선택</a>
+                            <div class="form-inline">
+                                <br>
+                                <div class="form-check">
+                                    <input type="checkbox" value="마포구" id="Mapo" name="DataEngCsv">
+                                    <label class="form-check-label" for="Mapo">마포구</label>
+                                    <input type="checkbox" value="서대문구" id="Seodaemoon" name="DataEngCsv">
+                                    <label class="form-check-label" for="Seodaemoon">서대문구</label>
+                                    <input type="checkbox" value="종로구" id="Jonglo" name="DataEngCsv">
+                                    <label class="form-check-label" for="Jonglo">종로구</label>
+                                </div>
+                                <hr>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             
-        }
-    
+        
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3 text-center">
+                        {% csrf_token %}
+                        
+                        <br>
+                        <a class="list-group-item list-group-item-success">예산 설정</a>
+                        <br>
+                            <div class="form-inline">
+                                <div class="form check">
+                                    <input class="form-check-input" type="radio" name="selected_items" id="month_check">
+                                    <label class="form-check-label" for="month_check"> 월세</label>
+                                    <input class="form-check-input" type="radio" name="selected_items" id="year_check">
+                                    <label class="form-check-label" for="year_check"> 전세</label>
+                                </div>
 
-        input[type="submit"]:hover,
-        input[type="radio"]:hover {
-            background-color: lightgrey; /* 호버 시 배경색 변경 */
-            transform: scale(1.05); /* 호버 시 약간 확대됨 */
-        }
-        input#content {
-            width: 300px; /* 원하는 너비로 조정합니다 */
-            height: 40px; /* 원하는 높이로 조정합니다 */
-            font-size: 16px; /* 원하는 폰트 크기로 조정합니다 */
-        }
-        input#title {
-            width: 300px; /* 원하는 너비로 조정합니다 */
-            height: 40px; /* 원하는 높이로 조정합니다 */
-            font-size: 16px;
-        }
-        .radio-label {
-            font-size: 25px; /* 원하는 글자 크기로 조정 */
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-            justify-content: center;
-            color:white;/* 버튼 간의 여백 조정 */
-        }
-
-        .radio-button {
-            width: 30px; /* 원하는 버튼 너비로 조정 */
-            height: 30px; /* 원하는 버튼 높이로 조정 */
-            margin-right: 8px;
-
-        }
-    </style>
-
-    
-</head>
-<body>
-<h2>[ 주거 희망하는 구 선택하기 ]</h2>
-<form action="{% url 'check_and_filter' %}" method = "post">
-    {% csrf_token %}
-    <div class="form-check">
-        <input type="checkbox" value="마포구" id="Mapo" name="DataEngCsv">
-        <label for="Mapo">마포구</label>
-    </div>
-
-    <div class="form-check">
-        <input type="checkbox" value="서대문구" id="Seodaemoon" name="DataEngCsv">
-        <label for="Seodaemoon">서대문구</label>
-    </div>
-
-    <div class="form-check">
-        <input type="checkbox" value="종로구" id="Jonglo" name="DataEngCsv">
-        <label for="Jonglo">종로구</label>
-    </div>
-
-    <h2>------------------------------------</h2>
-    <h2>[ 희망하는 금액 설정하기 ]</h2>
-    <form method="post">
-        <label for="month_check" class="radio-label">
-        <input type="radio" name="selected_items" id="month_check" value="month_check" class="radio-button">월세</label> 
-        <label for="year_check" class="radio-label">
-        <input type="radio" name="selected_items" id="year_check" value="year_check" class="radio-button"> 전세</label> 
-
-        <h2>[ 전/월세 보증금 ]</h2>
-        <h3>(단위:만(원))</h3>
-        <input type="text" id="title" name="title">
-
-        <br><h2>[ 월 세 ]</h2>
-        <h3>(단위:만(원))</h3>
-        {% if not year_check %}
-            <input type="text" id="content" name="content">
-        {% else %}
-            <input type="text" id="content" name="content" disabled>
-        {% endif %}
-        <br>
-        <br>
-        <input type="submit" value="선택">
-    </form>
-    
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function () {
-             // "전세" 버튼의 변경 이벤트를 감지하는 함수
-            $('#year_check').change(function () {
+                        <div class="form-group input-group">
+                            <span class="input-group-addon">[전/월세 보증금]</span>
+                                <input type="text" id="title" name="title" class="form-control" placeholder="최대 보증금 입력">
+                            <span class="input-group-addon">만원</span>
+                        </div>
+                        <br>
+                        <br>
+                        <div class="form-group input-group">
+                            <span class="input-group-addon">[월세]</span>
+                            {% if not year_check %}
+                                <input type="text" id="content" name="content" class="form-control" placeholder="최대 월세 입력">
+                            {% else %}
+                                <input type="text" id="content" name="content" class="form-control" placeholder="최대 월세 입력" disabled>
+                            {% endif %}
+                            <span class="input-group-addon">만원</span>
+                        </div>
+                        <br>
+                        <br>
+                        <div class="text-center">
+                            <input type="submit" value="다음" class="btn btn-primary">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <hr>
+        <footer class="footer-fixed" style="background-color: rgb(64, 154, 206); color: #ffffff">
+            <div class="container">
+                <br>
+                <div class="row">
+                    <div class="col-sm-2" style="text-align: center;"><h5>Copyright &copy; 2023</h5><h5>Orara..?</h5></div>
+                </div>
+            </div>
+        </footer>
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+        <script src="bootstrap.js"></script>
+        <script>
+            $(document).ready(function () {
+                // 전세/월세 라디오 버튼 변경 이벤트 처리
+                $('#year_check').change(function () {
+                    toggleContentInput();
+                });
+        
+                $('#month_check').change(function () {
+                    toggleContentInput();
+                });
+        
+                function toggleContentInput() {
+                    if ($('#year_check').prop('checked')) {
+                        $('#content').prop('disabled', true).val('');
+                    } else if ($('#month_check').prop('checked')) {
+                        $('#content').prop('disabled', false).val('');
+                    }
+                }
+        
+                // 페이지 로드 시 초기 설정
                 toggleContentInput();
             });
-            
-            // "월세" 버튼의 변경 이벤트를 감지하는 함수
-            $('#month_check').change(function () {
-            toggleContentInput();
-             });
-
-            // "전세" 버튼과 "월세" 버튼의 상태에 따라 "월 세" 입력란을 활성화 또는 비활성화하는 함수
-            function toggleContentInput() {
-                if ($('#year_check').prop('checked')) {
-                    $('#content').prop('disabled', true).val('');
-                } 
-                if ($('#month_check').prop('checked')) {
-                    $('#content').prop('disabled', false).val('');
-                } 
-            }
-
-            // 페이지 로드 시 초기 설정
-            toggleContentInput();
-        });
-    </script>
-</body>
+        </script>
+    </body>
 </html>
