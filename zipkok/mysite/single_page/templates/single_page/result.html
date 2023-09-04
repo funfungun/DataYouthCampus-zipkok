@@ -1,0 +1,247 @@
+{% load static %}
+{% load mathfilters %}
+<link rel="stylesheet" type="text/css" href="{% static 'bootstrap.css' %}">
+<!-- <link rel="stylesheet" type="text/css" href="{% static 'homes.css' %}"> --> 
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width", initial-scale="1">
+        <title>집! 콕!</title>
+        <script>
+            function goBack() {
+                window.history.back();
+            }
+            
+            document.addEventListener("DOMContentLoaded", function() {
+                var result_2 = {{ result_2 | safe }};  
+                if (Object.keys(result_2).length === 0) {
+                    alert("해당 조건을 만족하는 우편번호가 없습니다. 다시 선택해주세요.");
+                    goBack();
+                }
+            }); 
+        </script>
+    </head>
+    <body>
+        <style>
+           body{
+                background-color: rgb(64, 154, 206);
+                color:white;
+            }
+            .text-center{
+                list-style: none;
+                justify-content: center;
+                padding: 0;
+            }
+            div {
+                text-align: center;
+            }
+            .button1 {
+                color:black;
+            }
+            li {
+                font-size: 20px;
+            }
+
+            .info-map-container {
+                text-align: center;
+                background-color: #4da5d7;
+                border-radius: 30px;
+    
+            }
+            .info-list {
+                list-style: none;
+                padding: 0;
+                margin-top: 10px;
+            
+            }
+            .info-list li {
+                font-size: 20px;
+                margin-bottom: 10px;
+            }
+            .map-container {
+                display:flex;
+                justify-content: space-between;
+                margin-top: 10px;
+            }
+            .map {
+                width: 48%;
+                margin-bottom: 20px;
+            }
+            .section {
+            display: none; /* 초기에 숨김 */ 
+            flex-direction: column;
+            align-items: center; /* 가운데 정렬 */
+            margin-right: 15px;
+            }
+            .info-list-2 {
+                display:flex;
+                flex-direction: row;
+                align-items: center;
+                margin-bottom: 80px;
+                overflow-x: auto; /* 가로 스크롤바 표시 */
+                white-space: nowrap; /* 텍스트 줄 바꿈 비활성화 */
+            }
+            #toggleButton {
+                color: black; /* 텍스트 색상을 검정색으로 설정합니다. */
+            }           
+            #toggleButton, .button1 {
+                color: black;
+                padding: 10px 20px; /* 버튼의 내부 여백을 조정하여 크기를 동일하게 만듭니다. */
+                background-color: white; /* 버튼의 배경색을 흰색으로 설정합니다. */
+                border: 1px solid black; /* 버튼의 테두리를 설정합니다. */
+                border-radius: 5px; /* 버튼의 모서리를 둥글게 만듭니다. */
+                cursor: pointer;
+                margin: 10px; /* 버튼 간 간격을 설정합니다. */
+            }
+
+            #toggleButton:hover, .button1:hover {
+                background-color: lightgray; /* 버튼에 호버 효과가 발생할 때 배경색을 변경합니다. */
+            }
+        </style>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">메인화면</a>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-center">
+                        <li><a href="#">지역/금액 선택<span class="sr-only"></span></a></li>
+                        <li><a href="#">인접시설 선택</a></li>
+                        <li><a href="#">세부사항 입력</a></li>
+                        <li class="active"><a href="#">결과 확인</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        
+        {% for key, value in result_2.items %}
+            {% for key2, value2 in result_3.items %}
+                {% for key3, value3 in result_plz.items %}
+                    {% if key == key2 and key2 == key3 %}
+                        
+                        <div class="info-map-container">
+                            <ul class="info-list">   
+                                <li><h3><b>추천우편번호 : {{key}}</b></h3></li>
+                                <li>주소 : {{value.city_gu}} {{value.admin_dong}}</li>
+                                {% if monf == 0 %}
+                                    <li>전세 : {{value.avg_cost}}만원</li>
+                                {% endif %}
+                                {% if monf != 0 %}
+                                <li>보증금 : {{mon}}만원</li> 
+                                <li>월세 : {% with avg_cost_diff=value.avg_cost|sub:mon %}
+                                    {% with avg_cost_diff_multiplied=avg_cost_diff|mul:0.052 %}
+                                        {% with avg_cost_final=avg_cost_diff_multiplied|div:12 %}
+                                            {{ avg_cost_final|floatformat:0 }}만원
+                                        {% endwith %}
+                                    {% endwith %}
+                                {% endwith %}
+                                    </li>
+                                {% endif %}
+                                <li>총 소요시간 : {{value.totalTime}}분</li>
+                                {% if value.walk_sum != 0 %}
+                                    <li>걷기 : {{value.walk_sum}}분</li>
+                                {% endif %}
+                                {% if value.bus_sum != 0 %}
+                                    <li>버스 : {{value.bus_sum}}분</li>
+                                {% endif %}
+                                {% if value.subway_sum != 0 %}
+                                    <li>지하철 : {{value.subway_sum}}분</li>
+                                {% endif %}
+                                
+                            </ul>
+                            <div><button class="button1" onclick="window.open('real_estate', 'image_window', 'width=800,height=480,location=no,status=no,scrollbars=yes');">주변부동산정보보기</button></div>
+                            
+                            <div><button id="toggleButton" data-target="{{ key3 }}">상세정보보기</button></div>
+                            <br>
+                            <div class ="info-list-2" data-key="{{key3}}">
+                            
+                                <div id="avg_area_{{ key3 }}" class="col-sm-3 section">
+                                    <h3>평균가격</h3>
+                                    <img src="{{value3.cost}}"alt="{{key3}}">   
+                                </div>
+                                <div id="avg_cost_{{ key3 }}" class="col-sm-3 section">
+                                    <h3>평균면적</h3>
+                                    <img src="{{value3.size}}" alt="{{key3}}">
+                                </div>
+                                <div id="avg_area_{{ key3 }}" class="col-sm-3 section">
+                                    <h3>평균건축년도</h3>
+                                    <img src="{{value3.year}}" alt="{{key3}}">
+                                </div>
+                                <div id="avg_cost_diff_{{ key3 }}" class ="col-sm-3 section">
+                                    <h3>주택 유형 평균 비율</h3>
+                                    <img src="{{value3.ratio}}" alt="{{key3}}">
+                                </div>
+
+                            </div>
+                            <div class = "map-container">
+                                <div class="map">{{value.map | safe}}</div>
+                                <div class="map">{{value2.map2 | safe}}</div>
+                            </div>            
+                        </div>        
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        {% endfor %}
+        <footer class="footer-fixed" style="background-color: rgb(64, 154, 206); color: #ffffff">
+            <div class="container">
+                <br>
+                <div class="row">
+                    <div class="col-sm-12 text-center">
+                        <h5>Copyright &copy; 2023</h5>
+                        <h5>Orara..?</h5>
+                        
+                        <form method="get" action="http://funfungun.shop:8005">
+                            <button type="submit" style="background-color: #ffffff; color: rgb(64, 154, 206); border: none; padding: 8px 16px; cursor: pointer; border-radius: 4px; margin-top: 10px;">홈으로</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+        <script src="{% static 'bootstrap.js' %}"></script>
+        <script>
+            document.getElementById("popupButton").addEventListener("click", function() {
+                var key = "{{key}}";
+                var url = key + "/";
+                window.open(url, "image_window", "width=600,height=450,location=no,status=no,scrollbars=yes");
+            });
+          
+        </script>
+        <script>
+            function goBack() {
+              window.history.back();
+            }
+        </script>
+        <script>
+    
+        const toggleButtons = document.querySelectorAll('[data-target]');
+        const sections = document.querySelectorAll('.section');
+
+        toggleButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const targetKey = button.getAttribute('data-target');
+                sections.forEach(section => {
+                    const sectionKey = section.parentElement.getAttribute('data-key');
+                    if (sectionKey === targetKey) {
+                        // 해당 버튼과 연결된 정보 섹션만 토글합니다.
+                        if (section.style.display === 'none' || section.style.display === '') {
+                            section.style.display = 'block';
+                        } else {
+                            section.style.display = 'none';
+                        }
+                    }
+                });
+            });
+        });
+
+        </script>                
+    </body>
+</html>
