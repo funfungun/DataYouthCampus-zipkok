@@ -1,0 +1,167 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'bootstrap.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'homes.css' %}">
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width", initial-scale="1">
+        <title>집! 콕!</title>
+        <script>
+            function goBack() {
+                window.history.back();
+            }
+            document.addEventListener("DOMContentLoaded", function() {
+                var numValue = {{ num }};
+                if (numValue === 0) {
+                    alert("남은 우편번호가 없습니다. 카테고리를 다시 선택해주세요.");
+                    goBack();
+                }
+            });
+        </script>
+    </head>
+
+    <style>
+        body{
+            background-color: #519ecb;
+        }
+        h3{
+            text-align: center;
+            color:rgb(255, 255, 255);
+        }
+
+        .list-group-item.list-group-item-success {
+        font-weight: bold;
+        }
+      
+    </style>
+    <body>
+        
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">메인화면</a>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-center">
+                        <li><a href="#">지역/금액 선택<span class="sr-only"></span></a></li>
+                        <li class="active"><a href="#">인접시설 선택</a></li>
+                        <li><a href="#">세부사항 입력</a></li>
+                        <li><a href="#">결과 확인</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div><h3><b>남은 우편번호 수 : {{num}}</b></h3></div> 
+
+        <hr>
+        <form id="checkbox-form" method="post" action="{% url 'category' %}">
+            {% csrf_token %}
+            <div class="container">
+                <div class="row">
+                    <div class="list-group" id="accordion">
+                        <a href="#collapse1" class="list-group-item list-group-item-success">공공기관</a>
+                        <div id="collapse1" class="collapse show">
+                            <label class="list-group-item">
+                                <input type="checkbox" name="selected_items" value="police_office"> 경찰서
+                                <input type="checkbox" name="selected_items" value="post_office"> 우체국
+                                <input type="checkbox" name="selected_items" value="citizen_center"> 주민센터
+                            </label>
+                        </div>
+
+                        <a href="#collapse2" class="list-group-item list-group-item-success">교통</a>
+                        <div id="collapse2" class="collapse show">
+                            <label class="list-group-item">
+                                <input type="checkbox" name="selected_items" value="bus_stop"> 버스 정류장
+                                <input type="checkbox" name="selected_items" value="bike"> 자전거 대여소
+                                <input type="checkbox" name="selected_items" value="subway"> 지하철 역
+                            </label>
+                        </div>
+
+                        <a href="#collapse3" class="list-group-item list-group-item-success">금융</a>
+                        <div id="collapse3" class="collapse show">
+                            <label class="list-group-item">
+                                <input type="checkbox" name="selected_items" value="bank"> 은행
+                                <input type="checkbox" name="selected_items" value="atm"> ATM
+                            </label>
+                        </div>
+
+                        <a href="#collapse4" class="list-group-item list-group-item-success">문화시설</a>
+                        <div id="collapse4" class="collapse show">
+                            <label class="list-group-item">
+                                <input type="checkbox" name="selected_items" value="perform_place"> 공연장
+                                <input type="checkbox" name="selected_items" value="liberary"> 도서관
+                                <input type="checkbox" name="selected_items" value="theater"> 영화관
+                                <input type="checkbox" name="selected_items" value="art"> 전시/미술
+                            </label>
+                        </div>
+
+                        <a href="#collapse5" class="list-group-item list-group-item-success">생활시설</a>
+                        <div id="collapse5" class="collapse show">
+                            <label class="list-group-item">
+                                <input type="checkbox" name="selected_items" value="food_store"> 음식점
+                                <input type="checkbox" name="selected_items" value="bar"> 유흥주점
+                                <input type="checkbox" name="selected_items" value="cafe"> 카페/디저트
+                                <input type="checkbox" name="selected_items" value="convience_store"> 편의점
+                                <input type="checkbox" name="selected_items" value="daiso"> 생활용품점
+                                <input type="checkbox" name="selected_items" value="banchan"> 반찬/밀키트
+                                <input type="checkbox" name="selected_items" value="super_market"> 슈퍼마켓
+                                <input type="checkbox" name="selected_items" value="big_mart"> 대형마트
+                                <input type="checkbox" name="selected_items" value="shopping_center"> 쇼핑센터
+                                <input type="checkbox" name="selected_items" value="pc_room"> PC방
+                                <input type="checkbox" name="selected_items" value="coin_karaoke"> 코인노래방
+                                <input type="checkbox" name="selected_items" value="coin_wash_room"> 코인세탁
+                                <input type="checkbox" name="selected_items" value="beauty_care"> 뷰티케어
+                            </label>
+                        </div>
+
+                        <a href="#collapse6" class="list-group-item list-group-item-success">운동시설</a>
+                        <div id="collapse6" class="collapse show">
+                            <label class="list-group-item">
+                                <input type="checkbox" name="selected_items" value="gym"> 헬스클럽
+                                <input type="checkbox" name="selected_items" value="yoga"> 요가
+                                <input type="checkbox" name="selected_items" value="piilates"> 필라테스
+                                <input type="checkbox" name="selected_items" value="cross_fit"> 크로스핏
+                                <input type="checkbox" name="selected_items" value="park"> 공원
+                                <input type="checkbox" name="selected_items" value="gonggogng_gym"> 공공체육시설
+                            </label>
+                        </div>
+
+                        <a href="#collapse7" class="list-group-item list-group-item-success">의료</a>
+                        <div id="collapse7" class="collapse show">
+                            <label class="list-group-item">
+                                <input type="checkbox" name="selected_items" value="hospital"> 병원
+                                <input type="checkbox" name="selected_items" value="pharmacy"> 약국
+                                <input type="checkbox" name="selected_items" value="animal_hospital"> 동물병원
+                            </label>
+                        </div>
+
+                        <a href="#collapse8" class="list-group-item list-group-item-success">종교</a>
+                        <div id="collapse8" class="collapse show">
+                            <label class="list-group-item">
+                                <input type="checkbox" name="selected_items" value="church"> 교회
+                                <input type="checkbox" name="selected_items" value="chatolic"> 성당
+                                <input type="checkbox" name="selected_items" value="temple"> 절
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center">
+                <input type="submit" value="다음" class="btn btn-primary">
+            </div>
+        </form>
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+        <script src="{% static 'bootstrap.js' %}"></script>
+
+    </body>
+</html>
